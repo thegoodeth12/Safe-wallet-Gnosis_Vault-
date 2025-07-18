@@ -3,7 +3,7 @@
   <img src="https://github.com/user-attachments/assets/b8249113-d515-4c91-a12a-f134813614e8" height="80" alt="Safe{Wallet} Logo" />
 </p>
 
-<h1 align="center">Safe{Wallet} Monorepo</h1>
+<h1 align="center">Safe{Wallet} .domain</h1>
 
 <p align="center">
   <a href="/apps/web/README.md">🌐 Web App</a> &nbsp;•&nbsp;
