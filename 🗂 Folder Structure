@@ -1,0 +1,12 @@
+safe-wallet-app/
+├── public/
+│   └── index.html
+├── src/
+│   ├── main.tsx
+│   ├── App.tsx
+│   └── hooks/useSafeWallet.ts
+├── .env.example
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+├── vercel.json
