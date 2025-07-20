@@ -1,4 +1,4 @@
-# 🛡️ Safe{Wallet}.BLOCKCHAIN
+# 🛡️ Safe{Wallet}.blockchain
 
 🌐 [Web App](/apps/web/README.md) ・ 📱 [Mobile App](/apps/mobile/README.md)
 
