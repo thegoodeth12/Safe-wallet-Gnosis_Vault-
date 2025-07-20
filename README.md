@@ -1,4 +1,4 @@
-readme_content = """# 🛡️ Safe Wallet
+# 🛡️ Safe{Wallet}.CHIGOZLE.BLOCKCHAIN
 
 🌐 [Web App](/apps/web/README.md) ・ 📱 [Mobile App](/apps/mobile/README.md)
 
