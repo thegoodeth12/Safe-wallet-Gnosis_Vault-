@@ -1,0 +1,6 @@
+/components
+  └─ ProposalList.tsx
+
+/pages/api
+  └─ github.ts        ← Webhook listener
+  └─ proposals.ts     ← Safe proposal fetcher
