@@ -1,0 +1,3 @@
+git add pages/*
+git commit -m "Add legal and transparency pages"
+git push origin main
