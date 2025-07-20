@@ -1,0 +1,6 @@
+.github/
+└── workflows/
+    └── update-status-badges.yml  ✅ (GitHub Action)
+scripts/
+└── update-badges.sh              ✅ (Shell script that injects badges into README)
+README.md                         ✅ (Updated dynamically)
