@@ -1,4 +1,5 @@
-self.onmessage = async () => {
-  const mod = await import('./dynamic')
-  self.postMessage('hello from worker: ' + mod.default)
+self.onmessage = (event) => {
+  self.postMessage({
+    msg: 'load worker',
+  })
 }

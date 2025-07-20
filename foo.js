@@ -1,1 +1,3 @@
-console.log('hi')
+export default function foo() {
+  return 'foo'
+}

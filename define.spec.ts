@@ -1,146 +1,117 @@
-import { describe, expect, test } from 'vitest'
-import { definePlugin } from '../../plugins/define'
-import { resolveConfig } from '../../config'
-import { PartialEnvironment } from '../../baseEnvironment'
+import { expect, test } from 'vitest'
+import viteConfig from '../vite.config'
+import { page } from '~utils'
 
-async function createDefinePluginTransform(
-  define: Record<string, any> = {},
-  build = true,
-  ssr = false,
-) {
-  const config = await resolveConfig(
-    { configFile: false, define },
-    build ? 'build' : 'serve',
+const defines = viteConfig.define
+const envDefines = viteConfig.environments.client.define
+
+test('string', async () => {
+  expect(await page.textContent('.exp')).toBe(
+    String(typeof eval(defines.__EXP__)),
   )
-  const instance = definePlugin(config)
-  const environment = new PartialEnvironment(ssr ? 'ssr' : 'client', config)
+  expect(await page.textContent('.string')).toBe(JSON.parse(defines.__STRING__))
+  expect(await page.textContent('.number')).toBe(String(defines.__NUMBER__))
+  expect(await page.textContent('.boolean')).toBe(String(defines.__BOOLEAN__))
+  expect(await page.textContent('.undefined')).toBe('')
 
-  return async (code: string) => {
-    // @ts-expect-error transform.handler should exist
-    const result = await instance.transform.handler.call(
-      { environment },
-      code,
-      'foo.ts',
-    )
-    return result?.code || result
-  }
-}
+  expect(await page.textContent('.object')).toBe(
+    JSON.stringify(defines.__OBJ__, null, 2),
+  )
+  expect(await page.textContent('.process-node-env')).toBe(
+    JSON.parse(defines['process.env.NODE_ENV']),
+  )
+  expect(await page.textContent('.process-env')).toBe(
+    JSON.stringify(defines['process.env'], null, 2),
+  )
+  expect(await page.textContent('.env-var')).toBe(
+    JSON.parse(defines['process.env.SOMEVAR']),
+  )
+  expect(await page.textContent('.process-as-property')).toBe(
+    defines.__OBJ__.process.env.SOMEVAR,
+  )
+  expect(await page.textContent('.spread-object')).toBe(
+    JSON.stringify({ SOMEVAR: defines['process.env.SOMEVAR'] }),
+  )
+  expect(await page.textContent('.spread-array')).toBe(
+    JSON.stringify([...defines.__STRING__]),
+  )
+  expect(await page.textContent('.dollar-identifier')).toBe(
+    String(defines.$DOLLAR),
+  )
+  expect(await page.textContent('.unicode-identifier')).toBe(
+    String(defines.ÖUNICODE_LETTERɵ),
+  )
+  expect(await page.textContent('.no-identifier-substring')).toBe(String(true))
+  expect(await page.textContent('.no-property')).toBe(String(true))
+  // html wouldn't need to define replacement
+  expect(await page.textContent('.exp-define')).toBe('__EXP__')
+  expect(await page.textContent('.import-json')).toBe('__EXP__')
+  expect(await page.textContent('.define-in-dep')).toBe(
+    defines.__STRINGIFIED_OBJ__,
+  )
+  expect(await page.textContent('.define-in-environment')).toBe(
+    envDefines.__DEFINE_IN_ENVIRONMENT__,
+  )
+})
 
-describe('definePlugin', () => {
-  test('replaces custom define', async () => {
-    const transform = await createDefinePluginTransform({
-      __APP_VERSION__: JSON.stringify('1.0'),
-    })
-    expect(await transform('const version = __APP_VERSION__ ;')).toBe(
-      'const version = "1.0";\n',
-    )
-    expect(await transform('const version = __APP_VERSION__;')).toBe(
-      'const version = "1.0";\n',
-    )
-  })
+test('ignores constants in string literals', async () => {
+  expect(
+    await page.textContent('.ignores-string-literals .process-env-dot'),
+  ).toBe('process.env.')
+  expect(
+    await page.textContent('.ignores-string-literals .global-process-env-dot'),
+  ).toBe('global.process.env.')
+  expect(
+    await page.textContent(
+      '.ignores-string-literals .globalThis-process-env-dot',
+    ),
+  ).toBe('globalThis.process.env.')
+  expect(
+    await page.textContent('.ignores-string-literals .process-env-NODE_ENV'),
+  ).toBe('process.env.NODE_ENV')
+  expect(
+    await page.textContent(
+      '.ignores-string-literals .global-process-env-NODE_ENV',
+    ),
+  ).toBe('global.process.env.NODE_ENV')
+  expect(
+    await page.textContent(
+      '.ignores-string-literals .globalThis-process-env-NODE_ENV',
+    ),
+  ).toBe('globalThis.process.env.NODE_ENV')
+  expect(
+    await page.textContent('.ignores-string-literals .import-meta-hot'),
+  ).toBe('import' + '.meta.hot')
+})
 
-  test('should not replace if not defined', async () => {
-    const transform = await createDefinePluginTransform({
-      __APP_VERSION__: JSON.stringify('1.0'),
-    })
-    expect(await transform('const version = "1.0";')).toBe(undefined)
-    expect(await transform('const version = import.meta.SOMETHING')).toBe(
-      undefined,
-    )
-  })
+test('replaces constants in template literal expressions', async () => {
+  expect(
+    await page.textContent(
+      '.replaces-constants-in-template-literal-expressions .process-env-dot',
+    ),
+  ).toBe(JSON.parse(defines['process.env.SOMEVAR']))
+  expect(
+    await page.textContent(
+      '.replaces-constants-in-template-literal-expressions .process-env-NODE_ENV',
+    ),
+  ).toBe('dev')
+})
 
-  test('replaces import.meta.env.SSR with false', async () => {
-    const transform = await createDefinePluginTransform()
-    expect(await transform('const isSSR = import.meta.env.SSR;')).toBe(
-      'const isSSR = false;\n',
-    )
-  })
+test('replace constants on import.meta.env when it is a invalid json', async () => {
+  expect(
+    await page.textContent(
+      '.replace-undefined-constants-on-import-meta-env .import-meta-env-UNDEFINED',
+    ),
+  ).toBe('undefined')
+  expect(
+    await page.textContent(
+      '.replace-undefined-constants-on-import-meta-env .import-meta-env-SOME_IDENTIFIER',
+    ),
+  ).toBe('true')
+})
 
-  test('preserve import.meta.hot with override', async () => {
-    // assert that the default behavior is to replace import.meta.hot with undefined
-    const transform = await createDefinePluginTransform()
-    expect(await transform('const hot = import.meta.hot;')).toBe(
-      'const hot = void 0;\n',
-    )
-    // assert that we can specify a user define to preserve import.meta.hot
-    const overrideTransform = await createDefinePluginTransform({
-      'import.meta.hot': 'import.meta.hot',
-    })
-    expect(await overrideTransform('const hot = import.meta.hot;')).toBe(
-      'const hot = import.meta.hot;\n',
-    )
-  })
-
-  test('replace import.meta.env.UNKNOWN with undefined', async () => {
-    const transform = await createDefinePluginTransform()
-    expect(await transform('const foo = import.meta.env.UNKNOWN;')).toBe(
-      'const foo = undefined                       ;\n',
-    )
-  })
-
-  test('leave import.meta.env["UNKNOWN"] to runtime', async () => {
-    const transform = await createDefinePluginTransform()
-    expect(await transform('const foo = import.meta.env["UNKNOWN"];')).toMatch(
-      /const __vite_import_meta_env__ = .*;\nconst foo = __vite_import_meta_env__\["UNKNOWN"\];/,
-    )
-  })
-
-  test('preserve import.meta.env.UNKNOWN with override', async () => {
-    const transform = await createDefinePluginTransform({
-      'import.meta.env.UNKNOWN': 'import.meta.env.UNKNOWN',
-    })
-    expect(await transform('const foo = import.meta.env.UNKNOWN;')).toBe(
-      'const foo = import.meta.env.UNKNOWN;\n',
-    )
-  })
-
-  test('replace import.meta.env when it is a invalid json', async () => {
-    const transform = await createDefinePluginTransform({
-      'import.meta.env.LEGACY': '__VITE_IS_LEGACY__',
-    })
-
-    expect(
-      await transform(
-        'const isLegacy = import.meta.env.LEGACY;\nimport.meta.env.UNDEFINED && console.log(import.meta.env.UNDEFINED);',
-      ),
-    ).toMatchInlineSnapshot(`
-      "const isLegacy = __VITE_IS_LEGACY__;
-      undefined                          && console.log(undefined                         );
-      "
-    `)
-  })
-
-  test('replace bare import.meta.env', async () => {
-    const transform = await createDefinePluginTransform()
-    expect(await transform('const env = import.meta.env;')).toMatch(
-      /const __vite_import_meta_env__ = .*;\nconst env = __vite_import_meta_env__;/,
-    )
-  })
-
-  test('already has marker', async () => {
-    const transform = await createDefinePluginTransform()
-    expect(
-      await transform(
-        'console.log(__vite_import_meta_env__);\nconst env = import.meta.env;',
-      ),
-    ).toMatch(
-      /const __vite_import_meta_env__1 = .*;\nconsole.log\(__vite_import_meta_env__\);\nconst env = __vite_import_meta_env__1;/,
-    )
-
-    expect(
-      await transform(
-        'console.log(__vite_import_meta_env__, __vite_import_meta_env__1);\n const env = import.meta.env;',
-      ),
-    ).toMatch(
-      /const __vite_import_meta_env__2 = .*;\nconsole.log\(__vite_import_meta_env__, __vite_import_meta_env__1\);\nconst env = __vite_import_meta_env__2;/,
-    )
-
-    expect(
-      await transform(
-        'console.log(__vite_import_meta_env__);\nconst env = import.meta.env;\nconsole.log(import.meta.env.UNDEFINED);',
-      ),
-    ).toMatch(
-      /const __vite_import_meta_env__1 = .*;\nconsole.log\(__vite_import_meta_env__\);\nconst env = __vite_import_meta_env__1;\nconsole.log\(undefined {26}\);/,
-    )
-  })
+test('optional values are detected by pattern properly', async () => {
+  expect(await page.textContent('.optional-env')).toBe(
+    JSON.parse(defines['process.env.SOMEVAR']),
+  )
 })

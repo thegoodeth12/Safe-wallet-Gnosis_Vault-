@@ -1,17 +1,17 @@
-import path from 'node:path'
 import { defineConfig } from 'vite'
 
+process.env.EXPAND = 'expand'
+
 export default defineConfig({
-  css: {
-    transformer: 'lightningcss',
-  },
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'nested'),
-    },
-  },
+  base: '/env/',
+  envPrefix: ['VITE_', 'CUSTOM_PREFIX_'],
   build: {
-    cssTarget: ['chrome61'],
-    cssMinify: 'lightningcss',
+    outDir: 'dist/env',
+  },
+  define: {
+    'import.meta.env.VITE_BOOL': true,
+    'import.meta.env.VITE_NUMBER': '123',
+    'import.meta.env.VITE_STRING': JSON.stringify('{"123",}'),
+    'import.meta.env.VITE_STRINGIFY_OBJECT': JSON.stringify({ a: '1', b: '2' }),
   },
 })

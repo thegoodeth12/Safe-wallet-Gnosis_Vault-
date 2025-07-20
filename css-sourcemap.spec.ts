@@ -53,20 +53,19 @@ describe.runIf(isServe)('serve', () => {
     const map = extractSourcemap(css)
     expect(formatSourcemapForSnapshot(map)).toMatchInlineSnapshot(`
       {
-        "mappings": "ACAA;;;;ADEA",
-        "sourceRoot": null,
+        "mappings": "AAAA;EACE,UAAU;AACZ;;ACAA;EACE,UAAU;AACZ",
         "sources": [
-          "linked-with-import.css",
           "be-imported.css",
+          "linked-with-import.css",
         ],
         "sourcesContent": [
-          "@import '@/be-imported.css';
-
-      .linked-with-import {
+          ".be-imported {
         color: red;
       }
       ",
-          ".be-imported {
+          "@import '@/be-imported.css';
+
+      .linked-with-import {
         color: red;
       }
       ",
@@ -92,10 +91,9 @@ describe.runIf(isServe)('serve', () => {
     const map = extractSourcemap(css)
     expect(formatSourcemapForSnapshot(map)).toMatchInlineSnapshot(`
       {
-        "mappings": "AAAA",
-        "sourceRoot": null,
+        "mappings": "AAAA,CAAC,QAAQ,CAAC;AACV,CAAC,CAAC,KAAK,CAAC,CAAC,GAAG;AACZ;",
         "sources": [
-          "imported.css",
+          "/root/imported.css",
         ],
         "sourcesContent": [
           ".imported {
@@ -113,20 +111,19 @@ describe.runIf(isServe)('serve', () => {
     const map = extractSourcemap(css)
     expect(formatSourcemapForSnapshot(map)).toMatchInlineSnapshot(`
       {
-        "mappings": "ACAA;;;;ADEA",
-        "sourceRoot": null,
+        "mappings": "AAAA;EACE,UAAU;AACZ;;ACAA;EACE,UAAU;AACZ",
         "sources": [
-          "imported-with-import.css",
-          "be-imported.css",
+          "/root/be-imported.css",
+          "/root/imported-with-import.css",
         ],
         "sourcesContent": [
-          "@import '@/be-imported.css';
-
-      .imported-with-import {
+          ".be-imported {
         color: red;
       }
       ",
-          ".be-imported {
+          "@import '@/be-imported.css';
+
+      .imported-with-import {
         color: red;
       }
       ",
@@ -141,10 +138,11 @@ describe.runIf(isServe)('serve', () => {
     const map = extractSourcemap(css)
     expect(formatSourcemapForSnapshot(map)).toMatchInlineSnapshot(`
       {
-        "ignoreList": [],
-        "mappings": "AAGE",
+        "mappings": "AAGE;EACE,OCJM",
+        "sourceRoot": "",
         "sources": [
           "/root/imported.sass",
+          "/root/imported-nested.sass",
         ],
         "sourcesContent": [
           "@use "/imported-nested.sass"
@@ -153,6 +151,8 @@ describe.runIf(isServe)('serve', () => {
         &-sass
           color: imported-nested.$primary
       ",
+          "$primary: red
+      ",
         ],
         "version": 3,
       }
@@ -160,12 +160,12 @@ describe.runIf(isServe)('serve', () => {
   })
 
   test('imported sass module', async () => {
-    const css = await getStyleTagContentIncluding('_imported-sass-module')
+    const css = await getStyleTagContentIncluding('._imported-sass-module_')
     const map = extractSourcemap(css)
     expect(formatSourcemapForSnapshot(map)).toMatchInlineSnapshot(`
       {
         "ignoreList": [],
-        "mappings": "AACE",
+        "mappings": "AACE;EACE",
         "sources": [
           "/root/imported.module.sass",
         ],
@@ -186,7 +186,7 @@ describe.runIf(isServe)('serve', () => {
     expect(formatSourcemapForSnapshot(map)).toMatchInlineSnapshot(`
       {
         "ignoreList": [],
-        "mappings": "AACE",
+        "mappings": "AACE,SAAC;EACC",
         "sources": [
           "/root/imported.less",
         ],
@@ -209,7 +209,7 @@ describe.runIf(isServe)('serve', () => {
     expect(formatSourcemapForSnapshot(map)).toMatchInlineSnapshot(`
       {
         "ignoreList": [],
-        "mappings": "AACE",
+        "mappings": "AACE;EACE,OAAM,QAAN",
         "sources": [
           "/root/imported.styl",
         ],
@@ -229,8 +229,7 @@ describe.runIf(isServe)('serve', () => {
     const map = extractSourcemap(css)
     expect(formatSourcemapForSnapshot(map)).toMatchInlineSnapshot(`
       {
-        "ignoreList": [],
-        "mappings": "AAAA",
+        "mappings": "AAAA;EACE;AADe",
         "sources": [
           "/root/imported.sss",
         ],

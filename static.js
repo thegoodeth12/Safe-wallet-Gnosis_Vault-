@@ -1,3 +1,1 @@
-import './static.css'
-
-export const foo = 'foo'
+export const self = 'dynamic-import-static'
