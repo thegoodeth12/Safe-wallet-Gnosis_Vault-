@@ -1,18 +1,20 @@
 {
-  "name": "safe-vault-kit",
+  "name": "safe-wallet-app",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@safe-global/api-kit": "^1.0.0",
-    "@safe-global/protocol-kit": "^1.0.0",
-    "@safe-global/safe-core-sdk": "^1.0.0",
-    "@safe-global/safe-ethers-lib": "^1.0.0",
-    "dotenv": "^16.0.0",
-    "ethers": "^6.0.0",
-    "ts-node": "^10.0.0",
-    "typescript": "^5.0.0"
+    "@safe-global/protocol-kit": "^1.4.1",
+    "ethers": "^6.10.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.0.0",
+    "typescript": "^5.4.0",
+    "vite": "^5.1.0"
   }
 }
