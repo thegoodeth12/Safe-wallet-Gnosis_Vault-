@@ -1,7 +1,10 @@
-import '@builder.io/qwik/qwikloader.js'
-
-import { render } from '@builder.io/qwik'
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
 import './index.css'
-import { App } from './app.tsx'
+import App from './App.tsx'
 
-render(document.getElementById('app') as HTMLElement, <App />)
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
