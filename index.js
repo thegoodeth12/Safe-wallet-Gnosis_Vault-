@@ -1,4 +1,6 @@
-import './foo.css'
-import barModuleClasses from './bar.module.css'
+import './insert' // inserts "color: orange"
+import './base.css' // includes "color: blue"
 
-export { barModuleClasses }
+document.querySelector('.order-bulk-update').addEventListener('click', () => {
+  import('./dynamic.css') // includes "color: green"
+})
