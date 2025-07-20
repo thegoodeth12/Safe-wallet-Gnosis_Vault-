@@ -1,4 +1,4 @@
-# 🛡️ Safe{Wallet}.CHIGOZLE.BLOCKCHAIN
+# 🛡️ Safe{Wallet}.BLOCKCHAIN
 
 🌐 [Web App](/apps/web/README.md) ・ 📱 [Mobile App](/apps/mobile/README.md)
 
@@ -128,15 +128,3 @@ See `.github/workflows/proposal-notify.yml` for implementation.
 | **Safe SDK** | Gnosis Safe interactions       |
 """
 
-# Create a temp directory and write README.md
-temp_dir = Path("/mnt/data/safe_wallet_readme")
-temp_dir.mkdir(parents=True, exist_ok=True)
-readme_path = temp_dir / "README.md"
-readme_path.write_text(readme_content, encoding="utf-8")
-
-# Create a zip file
-zip_path = Path("/mnt/data/SafeWallet_Readme.zip")
-with zipfile.ZipFile(zip_path, 'w') as zipf:
-    zipf.write(readme_path, arcname="README.md")
-
-zip_path
