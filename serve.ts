@@ -1,10 +1,38 @@
 // this is automatically detected by playground/vitestSetup.ts and will replace
 // the default e2e test serve behavior
 
-// The server is started in the test, so we need to have a custom serve
-// function or a default server will be created
-export async function serve() {
-  return {
-    close: () => Promise.resolve(),
-  }
+import path from 'node:path'
+import kill from 'kill-port'
+import { hmrPorts, ports, rootDir } from '~utils'
+
+export const port = ports['css/lightningcss-proxy']
+
+export async function serve(): Promise<{ close(): Promise<void> }> {
+  await kill(port)
+
+  const { createServer } = await import(path.resolve(rootDir, 'server.js'))
+  const { app, vite } = await createServer(
+    rootDir,
+    hmrPorts['css/lightningcss-proxy'],
+  )
+
+  return new Promise((resolve, reject) => {
+    try {
+      const server = app.listen(port, () => {
+        resolve({
+          // for test teardown
+          async close() {
+            await new Promise((resolve) => {
+              server.close(resolve)
+            })
+            if (vite) {
+              await vite.close()
+            }
+          },
+        })
+      })
+    } catch (e) {
+      reject(e)
+    }
+  })
 }
