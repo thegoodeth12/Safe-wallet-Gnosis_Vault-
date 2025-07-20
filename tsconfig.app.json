@@ -6,10 +6,6 @@
     "module": "ESNext",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
-    "paths": {
-      "react": ["./node_modules/preact/compat/"],
-      "react-dom": ["./node_modules/preact/compat/"]
-    },
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -18,7 +14,7 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "preact",
+    "jsxImportSource": "@builder.io/qwik",
 
     /* Linting */
     "strict": true,

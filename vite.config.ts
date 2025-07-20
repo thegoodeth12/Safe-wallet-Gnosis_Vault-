@@ -1,7 +1,11 @@
 import { defineConfig } from 'vite'
-import preact from '@preact/preset-vite'
+import { qwikVite } from '@builder.io/qwik/optimizer'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [preact()],
+  plugins: [
+    qwikVite({
+      csr: true,
+    }),
+  ],
 })
