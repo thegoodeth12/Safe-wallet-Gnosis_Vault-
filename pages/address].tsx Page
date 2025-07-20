@@ -1,0 +1,4 @@
+import ProposalList from "@/components/ProposalList";
+
+// Add below SafeOwners
+<ProposalList safeAddress={query.address as string} />
