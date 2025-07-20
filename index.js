@@ -1,4 +1,4 @@
-export const g = import.meta.glob('/pkg-pages/*.js')
-document.querySelector('.in-package').textContent = JSON.stringify(
-  Object.keys(g).sort(),
-)
+import { foo } from './child'
+
+// @ts-expect-error global
+export const msg = `soft-invalidation/index.js is transformed ${__TRANSFORM_COUNT__} times. child is ${foo}`

@@ -1,10 +1,12 @@
-import './c-scoped.css' // should be treeshaken away if `b` is not used
+import './b'
 
-export default function c() {
-  return 'treeshake-scoped-c'
-}
+export const c = 'c'
 
-export function cUsed() {
-  // used but does not depend on scoped css
-  return 'c-used'
+function render(content) {
+  document.querySelector('.self-accept-within-circular').textContent = content
 }
+render(c)
+
+import.meta.hot?.accept((nextExports) => {
+  render(nextExports.c)
+})

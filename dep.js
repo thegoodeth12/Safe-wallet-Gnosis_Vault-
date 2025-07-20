@@ -1,17 +1,8 @@
-export default class C {
-  static f = () => 0;
-}
+// This file is depended by main.css via this.addWatchFile
+export const color = 'red'
 
-C = class {
-  static f = () => 1;
-}
-
-C = class {
-  static f = () => 2;
-}
-
-export function update() {
-  C = class {
-    static f = () => 3;
-  }
+// Self-accept so that updating this file would not trigger a page reload.
+// We only want to observe main.css updating itself.
+if (import.meta.hot) {
+  import.meta.hot.accept()
 }

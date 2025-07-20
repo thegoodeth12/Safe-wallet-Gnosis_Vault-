@@ -1,7 +1,3 @@
-import './before.css'
-import './a-scoped.css'
-import './after.css'
+import 'missing-modules'
 
-export default function a() {
-  return 'treeshake-scoped-order-a'
-}
+console.log('missing test')
