@@ -1,9 +1,7 @@
-import moduleCondition from '@vite/test-config-plugin-module-condition'
-import { array } from '../siblings/foo'
-import importsField from '#imports-field'
+import { defineConfig } from 'vite'
+import plugin from './plugin'
 
-export default {
-  array,
-  moduleCondition,
-  importsField,
-}
+export default defineConfig({
+  root: './test',
+  plugins: [plugin()],
+})

@@ -1,12 +1,8 @@
 {
-  "name": "@vite/test-config-plugin-module-condition",
+  "name": "@vitejs/parent",
   "type": "module",
-  "exports": {
-    ".": {
-      "types": "./index.d.ts",
-      "module": "./module.mjs",
-      "import": "./index.mjs",
-      "require": "./index.cjs"
-    }
+  "main": "./index.ts",
+  "dependencies": {
+    "@vitejs/child": "link:../child"
   }
 }
