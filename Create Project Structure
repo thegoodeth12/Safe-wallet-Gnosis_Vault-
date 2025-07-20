@@ -1,0 +1,9 @@
+/safe-dashboard
+  ├─ /components
+  ├─ /pages
+  │   ├─ index.tsx
+  │   └─ safe/[address].tsx
+  ├─ /utils
+  │   └─ safe.ts
+  ├─ .env.local
+  └─ tsconfig.json
