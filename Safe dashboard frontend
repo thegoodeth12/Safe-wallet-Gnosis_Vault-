@@ -1,0 +1,26 @@
+const OFFICIAL_SAFE_APPS = [
+  'https://apps.safe.global',
+  'https://app.safe.global',
+  'https://multisig.app',
+];
+
+function isOfficialAppUrl(url: string): boolean {
+  try {
+    const parsed = new URL(url);
+    return OFFICIAL_SAFE_APPS.some((officialUrl) => url.startsWith(officialUrl));
+  } catch {
+    return false;
+  }
+}
+
+// Use this logic before loading iframe or iframe src:
+if (!isOfficialAppUrl(appUrl)) {
+  showModal({
+    title: '⚠️ Unofficial Safe App',
+    content: 'The app you are trying to open is not an official Safe App. Do you wish to proceed?',
+    actions: [
+      { label: 'Cancel', onClick: () => history.back() },
+      { label: 'Continue Anyway', onClick: () => loadIframe(appUrl) },
+    ],
+  });
+}
