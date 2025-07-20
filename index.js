@@ -1,5 +1,4 @@
-import './from-js.css'
+import './foo.css'
+import barModuleClasses from './bar.module.css'
 
-document.querySelector('.js').textContent = 'js: ok'
-
-import('./dynamic.js')
+export { barModuleClasses }

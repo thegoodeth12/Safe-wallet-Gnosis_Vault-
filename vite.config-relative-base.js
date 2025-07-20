@@ -15,11 +15,6 @@ export default defineConfig(({ isPreview }) => ({
         entryFileNames: 'entries/[name].js',
         chunkFileNames: 'chunks/[name]-[hash].js',
         assetFileNames: 'other-assets/[name]-[hash][extname]',
-        manualChunks(id) {
-          if (id.includes('css/manual-chunks.css')) {
-            return 'css/manual-chunks'
-          }
-        },
       },
     },
   },

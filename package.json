@@ -1,12 +1,6 @@
 {
-  "name": "@vitejs/test-csp",
+  "name": "@vitejs/test-css-proxy-dep-nested",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "debug": "node --inspect-brk ../../packages/vite/bin/vite",
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  }
+  "version": "1.0.0",
+  "style": "index.css"
 }
