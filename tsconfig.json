@@ -1,14 +1,16 @@
 {
+  "include": ["tsdown.config.ts", "src", "__tests__"],
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "jsx": "react-jsx",
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
+    "outDir": "dist",
+    "target": "ES2023",
+    "module": "Preserve",
+    "moduleResolution": "bundler",
+    "types": [],
+    "allowImportingTsExtensions": true,
+    "strict": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "include": ["src"]
+    "noUnusedLocals": true,
+    "esModuleInterop": true,
+    "noEmit": true
+  }
 }

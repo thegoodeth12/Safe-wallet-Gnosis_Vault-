@@ -1,59 +1,89 @@
-<p align="center">
-  <a href="https://vite.dev" target="_blank" rel="noopener noreferrer">
-    <img width="180" src="https://vite.dev/logo.svg" alt="Vite logo">
-  </a>
-</p>
-<br/>
-<p align="center">
-  <a href="https://npmjs.com/package/vite"><img src="https://img.shields.io/npm/v/vite.svg" alt="npm package"></a>
-  <a href="https://nodejs.org/en/about/previous-releases"><img src="https://img.shields.io/node/v/vite.svg" alt="node compatibility"></a>
-  <a href="https://github.com/vitejs/vite/actions/workflows/ci.yml"><img src="https://github.com/vitejs/vite/actions/workflows/ci.yml/badge.svg?branch=main" alt="build status"></a>
-  <a href="https://pr.new/vitejs/vite"><img src="https://developer.stackblitz.com/img/start_pr_dark_small.svg" alt="Start new PR in StackBlitz Codeflow"></a>
-  <a href="https://chat.vite.dev"><img src="https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord" alt="discord chat"></a>
-</p>
-<br/>
+# create-vite <a href="https://npmjs.com/package/create-vite"><img src="https://img.shields.io/npm/v/create-vite" alt="npm package"></a>
 
-# Vite ⚡
+## Scaffolding Your First Vite Project
 
-> Next Generation Frontend Tooling
+> **Compatibility Note:**
+> Vite requires [Node.js](https://nodejs.org/en/) version 20.19+, 22.12+. However, some templates require a higher Node.js version to work, please upgrade if your package manager warns about it.
 
-- 💡 Instant Server Start
-- ⚡️ Lightning Fast HMR
-- 🛠️ Rich Features
-- 📦 Optimized Build
-- 🔩 Universal Plugin Interface
-- 🔑 Fully Typed APIs
+With NPM:
 
-Vite (French word for "quick", pronounced [`/vit/`](https://cdn.jsdelivr.net/gh/vitejs/vite@main/docs/public/vite.mp3), like "veet") is a new breed of frontend build tooling that significantly improves the frontend development experience. It consists of two major parts:
+```bash
+npm create vite@latest
+```
 
-- A dev server that serves your source files over [native ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), with [rich built-in features](https://vite.dev/guide/features.html) and astonishingly fast [Hot Module Replacement (HMR)](https://vite.dev/guide/features.html#hot-module-replacement).
+With Yarn:
 
-- A [build command](https://vite.dev/guide/build.html) that bundles your code with [Rollup](https://rollupjs.org), pre-configured to output highly optimized static assets for production.
+```bash
+yarn create vite
+```
 
-In addition, Vite is highly extensible via its [Plugin API](https://vite.dev/guide/api-plugin.html) and [JavaScript API](https://vite.dev/guide/api-javascript.html) with full typing support.
+With PNPM:
 
-[Read the Docs to Learn More](https://vite.dev).
+```bash
+pnpm create vite
+```
 
-## Packages
+With Bun:
 
-| Package                                         | Version (click for changelogs)                                                                                                    |
-| ----------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
-| [vite](packages/vite)                           | [![vite version](https://img.shields.io/npm/v/vite.svg?label=%20)](packages/vite/CHANGELOG.md)                                    |
-| [@vitejs/plugin-legacy](packages/plugin-legacy) | [![plugin-legacy version](https://img.shields.io/npm/v/@vitejs/plugin-legacy.svg?label=%20)](packages/plugin-legacy/CHANGELOG.md) |
-| [create-vite](packages/create-vite)             | [![create-vite version](https://img.shields.io/npm/v/create-vite.svg?label=%20)](packages/create-vite/CHANGELOG.md)               |
+```bash
+bun create vite
+```
 
-## Contribution
+Then follow the prompts!
 
-See [Contributing Guide](CONTRIBUTING.md).
+You can also directly specify the project name and the template you want to use via additional command line options. For example, to scaffold a Vite + Vue project, run:
 
-## License
+```bash
+# npm 7+, extra double-dash is needed:
+npm create vite@latest my-vue-app -- --template vue
 
-[MIT](LICENSE).
+# yarn
+yarn create vite my-vue-app --template vue
 
-## Sponsors
+# pnpm
+pnpm create vite my-vue-app --template vue
 
-<p align="center">
-  <a target="_blank" href="https://github.com/sponsors/yyx990803">
-    <img alt="sponsors" src="https://sponsors.vuejs.org/vite.svg?v2">
-  </a>
-</p>
+# Bun
+bun create vite my-vue-app --template vue
+```
+
+Currently supported template presets include:
+
+- `vanilla`
+- `vanilla-ts`
+- `vue`
+- `vue-ts`
+- `react`
+- `react-ts`
+- `react-swc`
+- `react-swc-ts`
+- `preact`
+- `preact-ts`
+- `lit`
+- `lit-ts`
+- `svelte`
+- `svelte-ts`
+- `solid`
+- `solid-ts`
+- `qwik`
+- `qwik-ts`
+
+You can use `.` for the project name to scaffold in the current directory.
+
+## Community Templates
+
+create-vite is a tool to quickly start a project from a basic template for popular frameworks. Check out Awesome Vite for [community maintained templates](https://github.com/vitejs/awesome-vite#templates) that include other tools or target different frameworks. You can use a tool like [degit](https://github.com/Rich-Harris/degit) to scaffold your project with one of the templates.
+
+```bash
+npx degit user/project my-project
+cd my-project
+
+npm install
+npm run dev
+```
+
+If the project uses `main` as the default branch, suffix the project repo with `#main`
+
+```bash
+npx degit user/project#main my-project
+```

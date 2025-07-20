@@ -1,20 +1,42 @@
 {
-  "name": "docs",
-  "private": true,
+  "name": "create-vite",
+  "version": "7.0.3",
   "type": "module",
-  "scripts": {
-    "docs": "vitepress dev",
-    "docs-build": "vitepress build",
-    "docs-serve": "vitepress serve"
+  "license": "MIT",
+  "author": "Evan You",
+  "bin": {
+    "create-vite": "index.js",
+    "cva": "index.js"
   },
+  "files": [
+    "index.js",
+    "template-*",
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsdown --watch",
+    "build": "tsdown",
+    "typecheck": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vitejs/vite.git",
+    "directory": "packages/create-vite"
+  },
+  "bugs": {
+    "url": "https://github.com/vitejs/vite/issues"
+  },
+  "homepage": "https://github.com/vitejs/vite/tree/main/packages/create-vite#readme",
+  "funding": "https://github.com/vitejs/vite?sponsor=1",
   "devDependencies": {
-    "@shikijs/vitepress-twoslash": "^3.8.0",
-    "@types/express": "^5.0.3",
-    "feed": "^5.1.0",
-    "gsap": "^3.13.0",
-    "vitepress": "^2.0.0-alpha.8",
-    "vitepress-plugin-group-icons": "^1.6.1",
-    "vitepress-plugin-llms": "^1.7.0",
-    "vue": "^3.5.17"
+    "@clack/prompts": "^0.11.0",
+    "cross-spawn": "^7.0.6",
+    "mri": "^1.2.0",
+    "picocolors": "^1.1.1",
+    "tsdown": "^0.12.9"
   }
 }
