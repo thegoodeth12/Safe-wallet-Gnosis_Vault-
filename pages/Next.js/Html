@@ -1,0 +1,8 @@
+/pages
+ ├── index.tsx               ← Homepage (can redirect to /docs)
+ ├── docs.tsx                ← Safe Wallet documentation
+ ├── privacy.tsx             ← Privacy policy
+ ├── terms.tsx               ← Terms of service
+ └── transparency.tsx        ← Optional: AI Act disclosure
+/public
+ └── safe-wallet-data.json   ← Optional: Raw data file to feed content
