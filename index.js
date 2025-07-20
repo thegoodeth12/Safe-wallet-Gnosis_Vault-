@@ -1,5 +1,4 @@
-text('.url', import.meta.url)
-
-function text(el, text) {
-  document.querySelector(el).textContent = text
-}
+export const g = import.meta.glob('/pkg-pages/*.js')
+document.querySelector('.in-package').textContent = JSON.stringify(
+  Object.keys(g).sort(),
+)

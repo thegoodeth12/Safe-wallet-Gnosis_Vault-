@@ -1,306 +1,166 @@
-import type { HotPayload, Update } from 'types/hmrPayload'
-import type { ModuleNamespace, ViteHotContext } from 'types/hot'
-import type { InferCustomEventPayload } from 'types/customEvent'
-import type { NormalizedModuleRunnerTransport } from './moduleRunnerTransport'
+import { virtual } from 'virtual:file'
+import { virtual as virtualDep } from 'virtual:file-dep'
+import { foo as depFoo, nestedFoo } from './hmrDep'
+import './importing-updated'
+import './invalidation-circular-deps'
+import './file-delete-restore'
+import './optional-chaining/parent'
+import './intermediate-file-delete'
+import './circular'
+import logo from './logo.svg'
+import logoNoInline from './logo-no-inline.svg'
+import { msg as softInvalidationMsg } from './soft-invalidation'
 
-type CustomListenersMap = Map<string, ((data: any) => void)[]>
+export const foo = 1
+text('.app', foo)
+text('.dep', depFoo)
+text('.nested', nestedFoo)
+text('.virtual', virtual)
+text('.virtual-dep', virtualDep)
+text('.soft-invalidation', softInvalidationMsg)
+setImgSrc('#logo', logo)
+setImgSrc('#logo-no-inline', logoNoInline)
 
-interface HotModule {
-  id: string
-  callbacks: HotCallback[]
-}
+text('.virtual-dep', 0)
 
-interface HotCallback {
-  // the dependencies must be fetchable paths
-  deps: string[]
-  fn: (modules: Array<ModuleNamespace | undefined>) => void
-}
-
-export interface HMRLogger {
-  error(msg: string | Error): void
-  debug(...msg: unknown[]): void
-}
-
-export class HMRContext implements ViteHotContext {
-  private newListeners: CustomListenersMap
-
-  constructor(
-    private hmrClient: HMRClient,
-    private ownerPath: string,
-  ) {
-    if (!hmrClient.dataMap.has(ownerPath)) {
-      hmrClient.dataMap.set(ownerPath, {})
-    }
-
-    // when a file is hot updated, a new context is created
-    // clear its stale callbacks
-    const mod = hmrClient.hotModulesMap.get(ownerPath)
-    if (mod) {
-      mod.callbacks = []
-    }
-
-    // clear stale custom event listeners
-    const staleListeners = hmrClient.ctxToListenersMap.get(ownerPath)
-    if (staleListeners) {
-      for (const [event, staleFns] of staleListeners) {
-        const listeners = hmrClient.customListenersMap.get(event)
-        if (listeners) {
-          hmrClient.customListenersMap.set(
-            event,
-            listeners.filter((l) => !staleFns.includes(l)),
-          )
-        }
-      }
-    }
-
-    this.newListeners = new Map()
-    hmrClient.ctxToListenersMap.set(ownerPath, this.newListeners)
-  }
-
-  get data(): any {
-    return this.hmrClient.dataMap.get(this.ownerPath)
-  }
-
-  accept(deps?: any, callback?: any): void {
-    if (typeof deps === 'function' || !deps) {
-      // self-accept: hot.accept(() => {})
-      this.acceptDeps([this.ownerPath], ([mod]) => deps?.(mod))
-    } else if (typeof deps === 'string') {
-      // explicit deps
-      this.acceptDeps([deps], ([mod]) => callback?.(mod))
-    } else if (Array.isArray(deps)) {
-      this.acceptDeps(deps, callback)
-    } else {
-      throw new Error(`invalid hot.accept() usage.`)
-    }
-  }
-
-  // export names (first arg) are irrelevant on the client side, they're
-  // extracted in the server for propagation
-  acceptExports(
-    _: string | readonly string[],
-    callback?: (data: any) => void,
-  ): void {
-    this.acceptDeps([this.ownerPath], ([mod]) => callback?.(mod))
-  }
-
-  dispose(cb: (data: any) => void): void {
-    this.hmrClient.disposeMap.set(this.ownerPath, cb)
-  }
-
-  prune(cb: (data: any) => void): void {
-    this.hmrClient.pruneMap.set(this.ownerPath, cb)
-  }
-
-  // Kept for backward compatibility (#11036)
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  decline(): void {}
-
-  invalidate(message: string): void {
-    const firstInvalidatedBy =
-      this.hmrClient.currentFirstInvalidatedBy ?? this.ownerPath
-    this.hmrClient.notifyListeners('vite:invalidate', {
-      path: this.ownerPath,
-      message,
-      firstInvalidatedBy,
-    })
-    this.send('vite:invalidate', {
-      path: this.ownerPath,
-      message,
-      firstInvalidatedBy,
-    })
-    this.hmrClient.logger.debug(
-      `invalidate ${this.ownerPath}${message ? `: ${message}` : ''}`,
-    )
-  }
-
-  on<T extends string>(
-    event: T,
-    cb: (payload: InferCustomEventPayload<T>) => void,
-  ): void {
-    const addToMap = (map: Map<string, any[]>) => {
-      const existing = map.get(event) || []
-      existing.push(cb)
-      map.set(event, existing)
-    }
-    addToMap(this.hmrClient.customListenersMap)
-    addToMap(this.newListeners)
-  }
-
-  off<T extends string>(
-    event: T,
-    cb: (payload: InferCustomEventPayload<T>) => void,
-  ): void {
-    const removeFromMap = (map: Map<string, any[]>) => {
-      const existing = map.get(event)
-      if (existing === undefined) {
-        return
-      }
-      const pruned = existing.filter((l) => l !== cb)
-      if (pruned.length === 0) {
-        map.delete(event)
-        return
-      }
-      map.set(event, pruned)
-    }
-    removeFromMap(this.hmrClient.customListenersMap)
-    removeFromMap(this.newListeners)
-  }
-
-  send<T extends string>(event: T, data?: InferCustomEventPayload<T>): void {
-    this.hmrClient.send({ type: 'custom', event, data })
-  }
-
-  private acceptDeps(
-    deps: string[],
-    callback: HotCallback['fn'] = () => {},
-  ): void {
-    const mod: HotModule = this.hmrClient.hotModulesMap.get(this.ownerPath) || {
-      id: this.ownerPath,
-      callbacks: [],
-    }
-    mod.callbacks.push({
-      deps,
-      fn: callback,
-    })
-    this.hmrClient.hotModulesMap.set(this.ownerPath, mod)
+const btn = document.querySelector('.virtual-update') as HTMLButtonElement
+btn.onclick = () => {
+  if (import.meta.hot) {
+    import.meta.hot.send('virtual:increment')
   }
 }
 
-export class HMRClient {
-  public hotModulesMap = new Map<string, HotModule>()
-  public disposeMap = new Map<string, (data: any) => void | Promise<void>>()
-  public pruneMap = new Map<string, (data: any) => void | Promise<void>>()
-  public dataMap = new Map<string, any>()
-  public customListenersMap: CustomListenersMap = new Map()
-  public ctxToListenersMap = new Map<string, CustomListenersMap>()
-  public currentFirstInvalidatedBy: string | undefined
+const btnDep = document.querySelector(
+  '.virtual-update-dep',
+) as HTMLButtonElement
+btnDep.onclick = () => {
+  if (import.meta.hot) {
+    import.meta.hot.send('virtual:increment', '-dep')
+  }
+}
 
-  constructor(
-    public logger: HMRLogger,
-    private transport: NormalizedModuleRunnerTransport,
-    // This allows implementing reloading via different methods depending on the environment
-    private importUpdatedModule: (update: Update) => Promise<ModuleNamespace>,
-  ) {}
+if (import.meta.hot) {
+  import.meta.hot.accept(({ foo }) => {
+    console.log('(self-accepting 1) foo is now:', foo)
+  })
 
-  public async notifyListeners<T extends string>(
-    event: T,
-    data: InferCustomEventPayload<T>,
-  ): Promise<void>
-  public async notifyListeners(event: string, data: any): Promise<void> {
-    const cbs = this.customListenersMap.get(event)
-    if (cbs) {
-      await Promise.allSettled(cbs.map((cb) => cb(data)))
-    }
+  import.meta.hot.accept(({ foo }) => {
+    console.log('(self-accepting 2) foo is now:', foo)
+  })
+
+  const handleDep = (type, newFoo, newNestedFoo) => {
+    console.log(`(${type}) foo is now: ${newFoo}`)
+    console.log(`(${type}) nested foo is now: ${newNestedFoo}`)
+    text('.dep', newFoo)
+    text('.nested', newNestedFoo)
   }
 
-  public send(payload: HotPayload): void {
-    this.transport.send(payload).catch((err) => {
-      this.logger.error(err)
-    })
-  }
+  import.meta.hot.accept('./logo.svg', (newUrl) => {
+    setImgSrc('#logo', newUrl.default)
+    console.log('Logo updated', newUrl.default)
+  })
 
-  public clear(): void {
-    this.hotModulesMap.clear()
-    this.disposeMap.clear()
-    this.pruneMap.clear()
-    this.dataMap.clear()
-    this.customListenersMap.clear()
-    this.ctxToListenersMap.clear()
-  }
+  import.meta.hot.accept('./logo-no-inline.svg', (newUrl) => {
+    setImgSrc('#logo-no-inline', newUrl.default)
+    console.log('Logo-no-inline updated', newUrl.default)
+  })
 
-  // After an HMR update, some modules are no longer imported on the page
-  // but they may have left behind side effects that need to be cleaned up
-  // (e.g. style injections)
-  public async prunePaths(paths: string[]): Promise<void> {
-    await Promise.all(
-      paths.map((path) => {
-        const disposer = this.disposeMap.get(path)
-        if (disposer) return disposer(this.dataMap.get(path))
-      }),
+  import.meta.hot.accept('./hmrDep', ({ foo, nestedFoo }) => {
+    handleDep('single dep', foo, nestedFoo)
+  })
+
+  import.meta.hot.accept('virtual:file-dep', ({ virtual }) => {
+    text('.virtual-dep', virtual)
+  })
+
+  import.meta.hot.accept(['./hmrDep'], ([{ foo, nestedFoo }]) => {
+    handleDep('multi deps', foo, nestedFoo)
+  })
+
+  import.meta.hot.dispose(() => {
+    console.log(`foo was:`, foo)
+  })
+
+  import.meta.hot.on('vite:afterUpdate', (event) => {
+    console.log(`>>> vite:afterUpdate -- ${event.type}`)
+  })
+
+  import.meta.hot.on('vite:beforeUpdate', (event) => {
+    console.log(`>>> vite:beforeUpdate -- ${event.type}`)
+
+    const cssUpdate = event.updates.find(
+      (update) =>
+        update.type === 'css-update' && update.path.includes('global.css'),
     )
-    paths.forEach((path) => {
-      const fn = this.pruneMap.get(path)
-      if (fn) {
-        fn(this.dataMap.get(path))
-      }
-    })
-  }
+    if (cssUpdate) {
+      text(
+        '.css-prev',
+        (document.querySelector('.global-css') as HTMLLinkElement).href,
+      )
 
-  protected warnFailedUpdate(err: Error, path: string | string[]): void {
-    if (!(err instanceof Error) || !err.message.includes('fetch')) {
-      this.logger.error(err)
+      // Wait until the tag has been swapped out, which includes the time taken
+      // to download and parse the new stylesheet. Assert the swapped link.
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          mutation.addedNodes.forEach((node) => {
+            if (
+              node.nodeType === Node.ELEMENT_NODE &&
+              (node as Element).tagName === 'LINK'
+            ) {
+              text('.link-tag-added', 'yes')
+            }
+          })
+          mutation.removedNodes.forEach((node) => {
+            if (
+              node.nodeType === Node.ELEMENT_NODE &&
+              (node as Element).tagName === 'LINK'
+            ) {
+              text('.link-tag-removed', 'yes')
+              text(
+                '.css-post',
+                (document.querySelector('.global-css') as HTMLLinkElement).href,
+              )
+            }
+          })
+        })
+      })
+
+      observer.observe(document.querySelector('#style-tags-wrapper'), {
+        childList: true,
+      })
     }
-    this.logger.error(
-      `Failed to reload ${path}. ` +
-        `This could be due to syntax errors or importing non-existent ` +
-        `modules. (see errors above)`,
-    )
-  }
+  })
 
-  private updateQueue: Promise<(() => void) | undefined>[] = []
-  private pendingUpdateQueue = false
+  import.meta.hot.on('vite:error', (event) => {
+    console.log(`>>> vite:error -- ${event.err.message}`)
+  })
 
-  /**
-   * buffer multiple hot updates triggered by the same src change
-   * so that they are invoked in the same order they were sent.
-   * (otherwise the order may be inconsistent because of the http request round trip)
-   */
-  public async queueUpdate(payload: Update): Promise<void> {
-    this.updateQueue.push(this.fetchUpdate(payload))
-    if (!this.pendingUpdateQueue) {
-      this.pendingUpdateQueue = true
-      await Promise.resolve()
-      this.pendingUpdateQueue = false
-      const loading = [...this.updateQueue]
-      this.updateQueue = []
-      ;(await Promise.all(loading)).forEach((fn) => fn && fn())
-    }
-  }
+  import.meta.hot.on('vite:invalidate', ({ path }) => {
+    console.log(`>>> vite:invalidate -- ${path}`)
+  })
 
-  private async fetchUpdate(update: Update): Promise<(() => void) | undefined> {
-    const { path, acceptedPath, firstInvalidatedBy } = update
-    const mod = this.hotModulesMap.get(path)
-    if (!mod) {
-      // In a code-splitting project,
-      // it is common that the hot-updating module is not loaded yet.
-      // https://github.com/vitejs/vite/issues/721
-      return
-    }
+  import.meta.hot.on('custom:foo', ({ msg }) => {
+    text('.custom', msg)
+  })
 
-    let fetchedModule: ModuleNamespace | undefined
-    const isSelfUpdate = path === acceptedPath
+  import.meta.hot.on('custom:remove', removeCb)
 
-    // determine the qualified callbacks before we re-import the modules
-    const qualifiedCallbacks = mod.callbacks.filter(({ deps }) =>
-      deps.includes(acceptedPath),
-    )
+  // send custom event to server to calculate 1 + 2
+  import.meta.hot.send('custom:remote-add', { a: 1, b: 2 })
+  import.meta.hot.on('custom:remote-add-result', ({ result }) => {
+    text('.custom-communication', result)
+  })
+}
 
-    if (isSelfUpdate || qualifiedCallbacks.length > 0) {
-      const disposer = this.disposeMap.get(acceptedPath)
-      if (disposer) await disposer(this.dataMap.get(acceptedPath))
-      try {
-        fetchedModule = await this.importUpdatedModule(update)
-      } catch (e) {
-        this.warnFailedUpdate(e, acceptedPath)
-      }
-    }
+function text(el, text) {
+  document.querySelector(el).textContent = text
+}
 
-    return () => {
-      try {
-        this.currentFirstInvalidatedBy = firstInvalidatedBy
-        for (const { deps, fn } of qualifiedCallbacks) {
-          fn(
-            deps.map((dep) =>
-              dep === acceptedPath ? fetchedModule : undefined,
-            ),
-          )
-        }
-        const loggedPath = isSelfUpdate ? path : `${acceptedPath} via ${path}`
-        this.logger.debug(`hot updated: ${loggedPath}`)
-      } finally {
-        this.currentFirstInvalidatedBy = undefined
-      }
-    }
-  }
+function setImgSrc(el, src) {
+  ;(document.querySelector(el) as HTMLImageElement).src = src
+}
+
+function removeCb({ msg }) {
+  text('.toRemove', msg)
+  import.meta.hot.off('custom:remove', removeCb)
 }

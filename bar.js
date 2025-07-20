@@ -1,1 +1,1 @@
-export const msg = 'Bar view'
+export default 'bar'

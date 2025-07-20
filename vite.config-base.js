@@ -2,7 +2,10 @@ import path from 'node:path'
 import { defineConfig } from 'vite'
 import svgVirtualModulePlugin from './svgVirtualModulePlugin'
 
+const BASE = '/base/'
+
 export default defineConfig({
+  base: BASE,
   build: {
     rollupOptions: {
       input: {
@@ -29,6 +32,7 @@ export default defineConfig({
   },
   define: {
     ROOT: JSON.stringify(path.dirname(__dirname).replace(/\\/g, '/')),
+    BASE: JSON.stringify(BASE),
   },
   plugins: [svgVirtualModulePlugin()],
 })

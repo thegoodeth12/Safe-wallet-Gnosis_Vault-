@@ -1,3 +1,2 @@
-export function hello() {
-  return 'dynamic-import-with-vars-contains-parenthesis'
-}
+import '@vitejs/test-dep-that-imports'
+import '@vitejs/test-dep-that-requires'

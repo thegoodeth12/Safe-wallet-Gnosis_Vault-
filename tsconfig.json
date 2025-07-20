@@ -1,9 +1,7 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "include": ["./", "../dep-types", "../types"],
-  "exclude": ["**/__tests__", "**/__tests_dts__"],
+  "extends": "../tsconfig.json",
+  "include": ["src"],
   "compilerOptions": {
-    "lib": ["ESNext", "DOM"],
-    "stripInternal": true
+    "jsx": "react-jsx"
   }
 }

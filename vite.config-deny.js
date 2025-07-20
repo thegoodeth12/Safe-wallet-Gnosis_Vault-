@@ -14,17 +14,7 @@ export default defineConfig({
     fs: {
       strict: true,
       allow: [path.resolve(__dirname, 'src')],
-    },
-    hmr: {
-      overlay: false,
-    },
-    headers: {
-      'x-served-by': 'vite',
-    },
-  },
-  preview: {
-    headers: {
-      'x-served-by': 'vite',
+      deny: ['**/deny/**'],
     },
   },
   define: {

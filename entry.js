@@ -1,8 +1,5 @@
-export async function setupCyclic() {
-	const mod = await import("./entry-cyclic.js");
-	await mod.default();
-}
+import { msg } from './nested/foo'
 
-export async function importAction(id) {
-	return await import(/* @vite-ignore */ id);
-}
+export const fullmsg = msg + 'bar'
+
+document.querySelector('.nested-entry').textContent = fullmsg
