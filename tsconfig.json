@@ -1,25 +1,15 @@
 {
+  "extends": "../../tsconfig.base.json",
+  "include": ["./", "../module-runner", "../types"],
+  "exclude": ["**/fixtures"],
   "compilerOptions": {
-    "target": "ES2022",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "skipLibCheck": true,
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "moduleDetection": "force",
-    "noEmit": true,
-
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
-  },
-  "include": ["src"]
+    // https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping#node-20
+    "lib": ["ES2023", "DOM"], // DOM because we have client code that gets inlined via function.toString()
+    "target": "ES2023",
+    "skipLibCheck": true, // lib check is done on final types
+    "stripInternal": true,
+    "paths": {
+      "vite/module-runner": ["../module-runner"]
+    }
+  }
 }

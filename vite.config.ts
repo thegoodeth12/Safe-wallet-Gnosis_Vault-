@@ -1,7 +1,9 @@
-import { defineConfig } from 'vite'
-import { svelte } from '@sveltejs/vite-plugin-svelte'
+import moduleCondition from '@vite/test-config-plugin-module-condition'
+import { array } from '../siblings/foo'
+import importsField from '#imports-field'
 
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [svelte()],
-})
+export default {
+  array,
+  moduleCondition,
+  importsField,
+}

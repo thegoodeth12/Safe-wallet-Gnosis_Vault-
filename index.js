@@ -1,3 +1,4 @@
-#!/usr/bin/env node
-
-import './dist/index.js'
+// eslint-disable-next-line no-undef
+module.exports = {
+  hello: () => 'world',
+}
