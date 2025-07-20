@@ -1,7 +1,12 @@
 {
-  "name": "@vitejs/test-package-f",
+  "name": "@vitejs/test-object-hooks",
   "private": true,
-  "version": "2.0.0",
+  "version": "0.0.0",
   "type": "module",
-  "main": "index.js"
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "debug": "node --inspect-brk ../../packages/vite/bin/vite",
+    "preview": "vite preview"
+  }
 }
