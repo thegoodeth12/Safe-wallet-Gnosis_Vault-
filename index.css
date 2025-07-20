@@ -1,6 +1,4 @@
-.css {
-  box-sizing: border-box;
-}
-.view {
-  color: red;
+/*! explicit comment */
+h2 {
+  color: #ff00ff;
 }
