@@ -1,0 +1,56 @@
+// pages/safe/[address].tsx
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import {
+  Box, Heading, Text, Spinner, Stack, Tag, Link,
+} from '@chakra-ui/react'
+
+type SafeInfo = {
+  address: string
+  nonce: number
+  threshold: number
+  owners: string[]
+}
+
+export default function SafePage() {
+  const { query } = useRouter()
+  const safeAddress = query.address as string
+
+  const [data, setData] = useState<SafeInfo | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (!safeAddress) return
+    const fetchSafe = async () => {
+      setLoading(true)
+      const res = await fetch(`https://safe-transaction-mainnet.safe.global/api/v1/safes/${safeAddress}`)
+      const json = await res.json()
+      setData(json)
+      setLoading(false)
+    }
+    fetchSafe()
+  }, [safeAddress])
+
+  if (loading) return <Spinner size="xl" />
+
+  if (!data) return <Text color="red.500">No Safe data found.</Text>
+
+  return (
+    <Box p={8}>
+      <Heading mb={4}>🔐 Safe Dashboard</Heading>
+      <Stack spacing={3}>
+        <Text><b>Address:</b> <Link href={`https://etherscan.io/address/${data.address}`} isExternal>{data.address}</Link></Text>
+        <Text><b>Nonce:</b> {data.nonce}</Text>
+        <Text><b>Threshold:</b> {data.threshold}</Text>
+        <Box>
+          <Text fontWeight="bold">Owners:</Text>
+          <Stack direction="row" wrap="wrap">
+            {data.owners.map(owner => (
+              <Tag key={owner} colorScheme="blue" mr={2}>{owner.slice(0, 6)}...{owner.slice(-4)}</Tag>
+            ))}
+          </Stack>
+        </Box>
+      </Stack>
+    </Box>
+  )
+}
