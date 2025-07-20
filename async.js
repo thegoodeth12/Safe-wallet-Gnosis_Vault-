@@ -1,8 +1,5 @@
-import './async.css'
-
-const div = document.createElement('div')
-div.className = 'async'
-document.body.appendChild(div)
-div.textContent = `async chunk (this should be teal) ${
-  getComputedStyle(div).color
-}`
+export function fn() {
+  const m = new Map()
+  m.set('foo', 'Hello')
+  document.querySelector('#app').textContent = m.get('foo')
+}

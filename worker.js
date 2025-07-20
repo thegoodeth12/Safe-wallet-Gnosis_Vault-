@@ -1,5 +1,5 @@
-self.onmessage = (event) => {
-  self.postMessage({
-    msg: 'load worker',
-  })
+import { module } from './module'
+
+self.onmessage = () => {
+  self.postMessage(module)
 }

@@ -1,40 +1,50 @@
+import fs from 'node:fs'
+import path from 'node:path'
+import legacy from '@vitejs/plugin-legacy'
 import { defineConfig } from 'vite'
-import transformFooWithInlineSourceMap from './foo-with-sourcemap-plugin'
-import { transformZooWithSourcemapPlugin } from './zoo-with-sourcemap-plugin'
 
 export default defineConfig({
+  base: './',
   plugins: [
-    transformFooWithInlineSourceMap(),
-    transformZooWithSourcemapPlugin(),
+    legacy({
+      targets: 'IE 11',
+      modernPolyfills: true,
+    }),
   ],
+
   build: {
+    cssCodeSplit: false,
+    manifest: true,
     sourcemap: true,
+    assetsInlineLimit: 100, // keep SVG as assets URL
     rollupOptions: {
+      input: {
+        index: path.resolve(__dirname, 'index.html'),
+        nested: path.resolve(__dirname, 'nested/index.html'),
+      },
       output: {
-        manualChunks(name) {
-          if (name.endsWith('after-preload-dynamic.js')) {
-            return 'after-preload-dynamic'
+        chunkFileNames(chunkInfo) {
+          if (chunkInfo.name === 'immutable-chunk') {
+            return `assets/${chunkInfo.name}.js`
+          } else if (/custom\d/.test(chunkInfo.name)) {
+            return `assets/chunk-X${
+              ['.', '-', ''][/custom(\d)/.exec(chunkInfo.name)[1]]
+            }[hash].js`
           }
-          if (name.endsWith('after-preload-dynamic-hashbang.js')) {
-            return 'after-preload-dynamic-hashbang'
-          }
-          if (name.endsWith('after-preload-dynamic-no-dep.js')) {
-            return 'after-preload-dynamic-no-dep'
-          }
-          if (name.includes('with-define-object')) {
-            return 'with-define-object'
-          }
+          return `assets/chunk-[name].[hash].js`
         },
-        banner(chunk) {
-          if (chunk.name.endsWith('after-preload-dynamic-hashbang')) {
-            return '#!/usr/bin/env node'
-          }
-        },
-        sourcemapDebugIds: true,
       },
     },
   },
-  define: {
-    __testDefineObject: '{ "hello": "test" }',
+
+  // for tests, remove `<script type="module">` tags and remove `nomodule`
+  // attrs so that we run the legacy bundle instead.
+  __test__() {
+    const indexPath = path.resolve(__dirname, './dist/index.html')
+    let index = fs.readFileSync(indexPath, 'utf-8')
+    index = index
+      .replace(/<script type="module".*?<\/script>/g, '')
+      .replace(/<script nomodule/g, '<script')
+    fs.writeFileSync(indexPath, index)
   },
 })
