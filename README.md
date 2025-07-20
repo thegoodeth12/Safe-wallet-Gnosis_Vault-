@@ -1,186 +1,59 @@
-<!-- Safe{Wallet} Logo -->
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/b8249113-d515-4c91-a12a-f134813614e8" height="80" alt="Safe{Wallet} Logo" />
+  <a href="https://vite.dev" target="_blank" rel="noopener noreferrer">
+    <img width="180" src="https://vite.dev/logo.svg" alt="Vite logo">
+  </a>
 </p>
+<br/>
+<p align="center">
+  <a href="https://npmjs.com/package/vite"><img src="https://img.shields.io/npm/v/vite.svg" alt="npm package"></a>
+  <a href="https://nodejs.org/en/about/previous-releases"><img src="https://img.shields.io/node/v/vite.svg" alt="node compatibility"></a>
+  <a href="https://github.com/vitejs/vite/actions/workflows/ci.yml"><img src="https://github.com/vitejs/vite/actions/workflows/ci.yml/badge.svg?branch=main" alt="build status"></a>
+  <a href="https://pr.new/vitejs/vite"><img src="https://developer.stackblitz.com/img/start_pr_dark_small.svg" alt="Start new PR in StackBlitz Codeflow"></a>
+  <a href="https://chat.vite.dev"><img src="https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord" alt="discord chat"></a>
+</p>
+<br/>
 
-<h1 align="center">Safe{Wallet} .domain</h1>
+# Vite ⚡
+
+> Next Generation Frontend Tooling
+
+- 💡 Instant Server Start
+- ⚡️ Lightning Fast HMR
+- 🛠️ Rich Features
+- 📦 Optimized Build
+- 🔩 Universal Plugin Interface
+- 🔑 Fully Typed APIs
+
+Vite (French word for "quick", pronounced [`/vit/`](https://cdn.jsdelivr.net/gh/vitejs/vite@main/docs/public/vite.mp3), like "veet") is a new breed of frontend build tooling that significantly improves the frontend development experience. It consists of two major parts:
+
+- A dev server that serves your source files over [native ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), with [rich built-in features](https://vite.dev/guide/features.html) and astonishingly fast [Hot Module Replacement (HMR)](https://vite.dev/guide/features.html#hot-module-replacement).
+
+- A [build command](https://vite.dev/guide/build.html) that bundles your code with [Rollup](https://rollupjs.org), pre-configured to output highly optimized static assets for production.
+
+In addition, Vite is highly extensible via its [Plugin API](https://vite.dev/guide/api-plugin.html) and [JavaScript API](https://vite.dev/guide/api-javascript.html) with full typing support.
+
+[Read the Docs to Learn More](https://vite.dev).
+
+## Packages
+
+| Package                                         | Version (click for changelogs)                                                                                                    |
+| ----------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
+| [vite](packages/vite)                           | [![vite version](https://img.shields.io/npm/v/vite.svg?label=%20)](packages/vite/CHANGELOG.md)                                    |
+| [@vitejs/plugin-legacy](packages/plugin-legacy) | [![plugin-legacy version](https://img.shields.io/npm/v/@vitejs/plugin-legacy.svg?label=%20)](packages/plugin-legacy/CHANGELOG.md) |
+| [create-vite](packages/create-vite)             | [![create-vite version](https://img.shields.io/npm/v/create-vite.svg?label=%20)](packages/create-vite/CHANGELOG.md)               |
+
+## Contribution
+
+See [Contributing Guide](CONTRIBUTING.md).
+
+## License
+
+[MIT](LICENSE).
+
+## Sponsors
 
 <p align="center">
-  <a href="/apps/web/README.md">🌐 Web App</a> &nbsp;•&nbsp;
-  <a href="/apps/mobile/README.md">📱 Mobile App</a>
+  <a target="_blank" href="https://github.com/sponsors/yyx990803">
+    <img alt="sponsors" src="https://sponsors.vuejs.org/vite.svg?v2">
+  </a>
 </p>
-
----
-
-## 📦 Overview
-
-Welcome to the **Safe{Wallet} Monorepo** — your secure, modular hub for managing Safe apps and libraries.  
-This monorepo leverages **Yarn Workspaces** to keep all your apps, shared code, and configs under one roof — elegant, efficient, and built for scale.
-
----
-
-## 🧱 Folder Structure
-
-```
-.
-├── apps/       # Web and mobile apps
-├── packages/   # Shared libraries and utilities
-├── config/     # Lint, test, and tooling configs
-```
-
----
-
-## ⚙️ Getting Started
-
-### ✅ Prerequisites
-
-Make sure you have the latest versions of:
-
-- **Node.js** — [Download here](https://nodejs.org/)
-- **Yarn v4.5.3+** (enabled via Corepack)
-
-Run this to enable Yarn:
-
-```bash
-corepack enable
-yarn
-```
-
-That installs the correct Yarn version and all dependencies automatically.
-
----
-
-### 🚀 Setup
-
-Clone the repo and install everything:
-
-```bash
-git clone <your-safe-repo-url>
-cd monorepo
-yarn install
-```
-
-Replace `<your-safe-repo-url>` with your actual GitHub repo link.
-
----
-
-## 🛠️ Common Commands
-
-### 🧩 Workspace Scripts
-
-Run a script inside a specific workspace:
-
-```bash
-yarn workspace <workspace-name> <script>
-```
-
-**Example:**
-
-```bash
-yarn workspace @safe-global/web start
-```
-
-Add or remove dependencies:
-
-```bash
-yarn workspace <workspace-name> add <package-name>
-yarn workspace <workspace-name> remove <package-name>
-```
-
-> 💡 Tip: If a command has a colon (`:`), you can often run it globally:
->
-> ```bash
-> yarn cypress:open
-> ```
-
----
-
-### 🧪 Linting & Testing
-
-Run linting across all workspaces:
-
-```bash
-yarn lint
-```
-
-Run all tests:
-
-```bash
-yarn test
-```
-
----
-
-## 🤝 Contributing
-
-### 🆕 Add a Workspace
-
-1. Create a folder under `apps/` or `packages/`
-2. Add a `package.json` with the correct metadata
-3. Run:
-
-```bash
-yarn install
-```
-
----
-
-### ✅ Best Practices
-
-- Always use `yarn workspace` to manage dependencies
-- Ensure linting and tests pass before pushing
-- Follow [Conventional Commit](https://www.conventionalcommits.org/) format
-
----
-
-## 🧰 Tooling Stack
-
-| Tool        | Description                            |
-|-------------|----------------------------------------|
-| **Yarn**    | Monorepo package manager               |
-| **Husky**   | Git hooks for pre-commit checks        |
-| **ESLint**  | JavaScript/TypeScript linting          |
-| **Prettier**| Code formatting                        |
-| **Jest**    | Unit testing                           |
-| **Expo**    | Framework for the mobile app           |
-| **Next.js** | Framework for the web app              |
-
----
-
-## 📚 Documentation
-
-- [Yarn Workspaces](https://classic.yarnpkg.com/en/docs/workspaces/)
-- [Next.js](https://nextjs.org/docs)
-- [Expo](https://docs.expo.dev/)
-- [Jest](https://jestjs.io/)
-- [ESLint](https://eslint.org/)
-- [Prettier](https://prettier.io/)
-
----
-
-## 💬 Questions?
-
-Need help or found a bug?  
-Open a discussion or reach out to the Safe core team.  
-We’re here to secure the chain 🔐
-
----
-
-<p align="center"><i>— Built with care by the Safe{Wallet} team</i></p>
-
-# Hello GitHub Actions
-
-<img src="https://octodex.github.com/images/Professortocat_v2.png" align="right" height="200px" />
-
-Hey thegoodeth12!
-
-Mona here. I'm done preparing your exercise. Hope you enjoy! 💚
-
-Remember, it's self-paced so feel free to take a break! ☕️
-
-[![](https://img.shields.io/badge/Go%20to%20Exercise-%E2%86%92-1f883d?style=for-the-badge&logo=github&labelColor=197935)](https://github.com/thegoodeth12/Safe-wallet/issues/1)
-
----
-
-&copy; 2025 GitHub &bull; [Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/code_of_conduct.md) &bull; [MIT License](https://gh.io/mit)
-
