@@ -1,4 +1,4 @@
-import './dep3'
+import './dep2'
 import { log } from './common'
 
-log('shared')
+log('dep3')

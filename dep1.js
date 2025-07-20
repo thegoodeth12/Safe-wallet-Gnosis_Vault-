@@ -1,2 +1,3 @@
-console.log('dep1');
-export {};
+import { log } from './common'
+
+log('dep1')

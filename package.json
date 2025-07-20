@@ -1,12 +1,6 @@
 {
-  "name": "@vitejs/test-hmr-ssr",
+  "name": "@vitejs/test-html-side-effects",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "debug": "node --inspect-brk ../../packages/vite/bin/vite",
-    "preview": "vite preview"
-  }
+  "sideEffects": false
 }

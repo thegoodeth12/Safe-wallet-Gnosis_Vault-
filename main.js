@@ -1,1 +1,1 @@
-import './a.js'
+document.querySelector('.relative-input').textContent = 'OK'
