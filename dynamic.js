@@ -1,3 +1,6 @@
 import './dynamic.css'
 
-document.querySelector('.dynamic-js').textContent = 'dynamic-js: ok'
+export const lazyLoad = async () => {
+  await import('./static.js')
+  document.body.classList.add('loaded')
+}

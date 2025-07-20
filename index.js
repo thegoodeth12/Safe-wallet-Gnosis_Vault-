@@ -1,6 +1,10 @@
-import './insert' // inserts "color: orange"
-import './base.css' // includes "color: blue"
+import './static.js'
 
-document.querySelector('.order-bulk-update').addEventListener('click', () => {
-  import('./dynamic.css') // includes "color: green"
+const link = document.head.appendChild(document.createElement('link'))
+link.rel = 'preload'
+link.as = 'style'
+link.href = new URL('./dynamic.css', import.meta.url).href
+
+import('./dynamic.js').then(async ({ lazyLoad }) => {
+  await lazyLoad()
 })

@@ -1,6 +1,6 @@
-@import '=/linked-at-import.css';
+@import './linked-at-import.css';
 
-/* test postcss nesting */
+/* test nesting */
 .wrapper {
   .linked {
     color: blue;
