@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
-import { svelte } from '@sveltejs/vite-plugin-svelte'
+import '../config-deps/foo.js'
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [svelte()],
+  envDir: '../custom-env',
+  publicDir: '../custom-public',
 })
