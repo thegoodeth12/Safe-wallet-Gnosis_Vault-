@@ -1,0 +1,1 @@
+GET https://safe-transaction-mainnet.safe.global/api/v1/safes/{address}/balances/usd/
