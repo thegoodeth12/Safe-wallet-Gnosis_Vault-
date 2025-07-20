@@ -1,1 +1,1 @@
-// empty
+export const foo = 'foo'
