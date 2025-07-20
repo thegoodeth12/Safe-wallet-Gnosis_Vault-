@@ -1,1 +1,1 @@
-export default 'import condition'
+export const hello = () => 'world'

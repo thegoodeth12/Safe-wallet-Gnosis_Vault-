@@ -1,3 +1,4 @@
 {
-  "type": "module"
+  "//": "this file is just here to make pnpm happy with --frozen-lockfile",
+  "version": "0.0.0"
 }

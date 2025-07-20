@@ -1,1 +1,2 @@
-export const dep1 = { ok: true };
+console.log('dep1');
+export {};
