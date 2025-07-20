@@ -1,1 +1,3 @@
-export default 'dynamic ok'
+import './dynamic.css'
+
+document.querySelector('.dynamic-js').textContent = 'dynamic-js: ok'

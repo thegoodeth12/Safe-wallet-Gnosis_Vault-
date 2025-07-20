@@ -1,1 +1,3 @@
-export const msg = `[success] alias to directory`
+export default class a {
+  name = 'a'
+}
