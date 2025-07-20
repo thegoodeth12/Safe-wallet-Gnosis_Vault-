@@ -17,5 +17,4 @@ BADGES=$(cat <<'EOF'
 EOF
 )
 
-# Inject badges into the README
 echo "$BADGES" > README.md
