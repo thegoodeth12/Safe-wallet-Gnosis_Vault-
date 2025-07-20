@@ -1,0 +1,3 @@
+git add pages/index.tsx
+git commit -m "Add Safe Wallet homepage"
+git push origin main

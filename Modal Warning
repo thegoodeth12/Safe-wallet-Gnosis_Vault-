@@ -1,0 +1,7 @@
+const WarningModal = ({ onCancel, onProceed }) => (
+  <Modal title="⚠️ Unofficial Safe App">
+    <p>This app is not part of the official Safe App ecosystem. Continue only if you trust the source.</p>
+    <Button onClick={onCancel}>Cancel</Button>
+    <Button type="primary" onClick={onProceed}>Continue Anyway</Button>
+  </Modal>
+);
