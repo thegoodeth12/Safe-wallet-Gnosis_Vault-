@@ -1,20 +1,22 @@
-# vite ⚡
+- `test1` - `test5`
 
-> Next Generation Frontend Tooling
+Cyclic import example based on https://github.com/vitejs/vite/issues/14048#issuecomment-2354774156
 
-- 💡 Instant Server Start
-- ⚡️ Lightning Fast HMR
-- 🛠️ Rich Features
-- 📦 Optimized Build
-- 🔩 Universal Plugin Interface
-- 🔑 Fully Typed APIs
+```mermaid
+flowchart TD
+    B(dep1.js) -->|dep1| A(index.js)
+    A -->|dep1| C(dep2.js)
+    C -->|dep2| A
+    A -->|dep1, dep2| entry.js
+```
 
-Vite (French word for "fast", pronounced `/vit/`) is a new breed of frontend build tool that significantly improves the frontend development experience. It consists of two major parts:
+---
 
-- A dev server that serves your source files over [native ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), with [rich built-in features](https://vite.dev/guide/features.html) and astonishingly fast [Hot Module Replacement (HMR)](https://vite.dev/guide/features.html#hot-module-replacement).
+- `test6`
 
-- A [build command](https://vite.dev/guide/build.html) that bundles your code with [Rollup](https://rollupjs.org), pre-configured to output highly optimized static assets for production.
-
-In addition, Vite is highly extensible via its [Plugin API](https://vite.dev/guide/api-plugin.html) and [JavaScript API](https://vite.dev/guide/api-javascript.html) with full typing support.
-
-[Read the Docs to Learn More](https://vite.dev).
+```mermaid
+flowchart TD
+    A(dep1.js) -->|dep1| B
+    B(dep2.js) -->|dep2| A
+    A -->|dep1| C(index.js)
+```

@@ -1,1 +1,3 @@
-module.exports = 'require condition'
+module.exports = {
+  hello: () => 'world',
+}

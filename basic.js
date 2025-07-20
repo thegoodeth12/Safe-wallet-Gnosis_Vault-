@@ -1,3 +1,3 @@
-export default {
-  value: 'works',
-}
+export const name = 'basic'
+
+export const meta = import.meta
