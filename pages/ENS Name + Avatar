@@ -1,0 +1,13 @@
+<Box>
+  <Text fontWeight="bold">Owners:</Text>
+  <Stack direction="column">
+    {owners.map((owner) => (
+      <HStack key={owner.address}>
+        <Avatar size="sm" src={owner.avatar || undefined} />
+        <Link href={`https://etherscan.io/address/${owner.address}`} isExternal>
+          {owner.name ?? `${owner.address.slice(0, 6)}...${owner.address.slice(-4)}`}
+        </Link>
+      </HStack>
+    ))}
+  </Stack>
+</Box>
