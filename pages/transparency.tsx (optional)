@@ -1,0 +1,31 @@
+// pages/transparency.tsx
+
+import Head from 'next/head';
+
+export default function Transparency() {
+  return (
+    <>
+      <Head>
+        <title>Transparency Disclosure | Safe Wallet</title>
+      </Head>
+      <main style={{ fontFamily: 'Arial, sans-serif', padding: '2rem' }}>
+        <h1>📖 Transparency Disclosure</h1>
+        <p>Last updated: July 20, 2025</p>
+
+        <p>
+          This project uses automation tools, AI assistance, and public APIs (e.g., GitHub, Safe{Wallet}, and Discord).
+        </p>
+
+        <h2>Automated Decisions</h2>
+        <p>
+          GitHub Actions and Discord bots may propose or relay transactions on your behalf, but they never sign or execute them without explicit approval by wallet owners.
+        </p>
+
+        <h2>AI Tools</h2>
+        <p>
+          This project occasionally uses AI to format proposals and documentation. No decisions about finances or governance are made by AI.
+        </p>
+      </main>
+    </>
+  );
+}
