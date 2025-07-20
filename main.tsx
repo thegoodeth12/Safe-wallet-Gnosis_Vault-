@@ -1,10 +1,5 @@
-import { createRoot } from "react-dom/client";
-import { HelmetProvider } from "react-helmet-async";
-import App from "./App";
-import "./index.css";
+import { render } from 'preact'
+import './index.css'
+import { App } from './app.tsx'
 
-createRoot(document.getElementById("root")!).render(
-  <HelmetProvider>
-    <App />
-  </HelmetProvider>
-);
+render(<App />, document.getElementById('app')!)
