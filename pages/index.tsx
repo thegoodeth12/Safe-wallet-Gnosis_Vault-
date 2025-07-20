@@ -1,84 +1,49 @@
 // pages/index.tsx
-import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
+import { getSafeInfo } from '../lib/safeApi';
 
 export default function Home() {
-  const year = new Date().getFullYear();
+  const [safeData, setSafeData] = useState<any>(null);
+  const safeAddress = '0xAfD5f60aA8eb4F488eAA0eF98c1C5B0645D9A0A0';
+
+  useEffect(() => {
+    getSafeInfo(safeAddress).then(setSafeData).catch(console.error);
+  }, []);
 
   return (
-    <div style={{ fontFamily: 'Inter, sans-serif', padding: '2rem', backgroundColor: '#f9f9f9', color: '#222' }}>
+    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
       <Head>
-        <title>Safe Wallet – Secure Multichain dApp</title>
-        <meta name="description" content="Custom secure Safe Wallet integrated with GitHub, Discord, and automated onchain coordination tools." />
+        <title>Safe Wallet – Live Data</title>
       </Head>
 
-      <header style={{ textAlign: 'center' }}>
-        <h1 style={{ fontSize: '2.8rem', fontWeight: 'bold', marginBottom: '0.3rem' }}>🛡️ Safe Wallet</h1>
-        <p style={{ fontSize: '1.2rem', color: '#555' }}>
-          Secure. Automated. Multichain. Built for next-gen onchain coordination.
-        </p>
-        <div style={{ marginTop: '1.5rem' }}>
-          <Link href="https://github.com/apps/safe-wallet" passHref legacyBehavior>
-            <a style={buttonStyle}>🔗 Install GitHub App</a>
-          </Link>
-          <Link href="/docs" passHref legacyBehavior>
-            <a style={{ ...buttonStyle, backgroundColor: '#005eff', marginLeft: '1rem' }}>📚 View Docs</a>
-          </Link>
-        </div>
-      </header>
+      <h1>🛡️ Safe Wallet Dashboard</h1>
+      <p>Secure. Automated. Live.</p>
 
-      <main style={{ marginTop: '3rem' }}>
-        <section>
-          <h2>🧠 Features</h2>
-          <ul>
-            <li>🔐 Gnosis Safe-compatible wallet logic</li>
-            <li>📡 Proposal alerts via GitHub & Slack/Discord</li>
-            <li>💬 Auto-signer logic with GitHub Actions</li>
-            <li>🔍 Owner + threshold viewer</li>
-            <li>⚙️ Dynamic ETH/token/contract proposal builder</li>
-          </ul>
-        </section>
+      <section style={{ marginTop: '2rem' }}>
+        <h2>💼 Safe Wallet Details</h2>
 
-        <section style={{ marginTop: '2rem' }}>
-          <h2>🚀 Quick Actions</h2>
-          <ul>
-            <li><a href="https://safe.global" target="_blank" rel="noopener noreferrer">Propose Transaction</a></li>
-            <li><a href="https://discord.gg/YOUR_DISCORD_ID" target="_blank" rel="noopener noreferrer">Join Discord Signers</a></li>
-          </ul>
-        </section>
-
-        <section style={{ marginTop: '2rem' }}>
-          <h2>💼 Safe Wallet Overview</h2>
+        {!safeData ? (
+          <p>Loading Safe details…</p>
+        ) : (
           <div style={{
-            border: '1px solid #ccc',
+            background: '#f0f0f0',
             borderRadius: '8px',
             padding: '1rem',
-            backgroundColor: '#fff'
+            lineHeight: '1.6'
           }}>
-            <p><strong>Address:</strong> <code>0xAfD5...D9A0A0</code></p>
-            <p><strong>Chain:</strong> Arbitrum</p>
-            <p><strong>Threshold:</strong> 2 of 3</p>
-            <p><strong>Owners:</strong> 0xABC…, 0xDEF…, 0xGHI…</p>
+            <p><strong>Address:</strong> {safeData.address}</p>
+            <p><strong>Network:</strong> Arbitrum</p>
+            <p><strong>Threshold:</strong> {safeData.threshold} out of {safeData.owners.length} owners</p>
+            <p><strong>Owners:</strong></p>
+            <ul>
+              {safeData.owners.map((owner: any) => (
+                <li key={owner.address}>{owner.address}</li>
+              ))}
+            </ul>
           </div>
-        </section>
-      </main>
-
-      <footer style={{ textAlign: 'center', marginTop: '4rem', fontSize: '0.9rem', color: '#999' }}>
-        <p>&copy; {year} Safe Wallet – A Custom Secure dApp</p>
-        <p>
-          <Link href="/privacy">Privacy</Link> | <Link href="/terms">Terms</Link> | <Link href="/transparency">Transparency</Link>
-        </p>
-      </footer>
+        )}
+      </section>
     </div>
   );
 }
-
-const buttonStyle = {
-  display: 'inline-block',
-  padding: '0.75rem 1.5rem',
-  backgroundColor: '#111',
-  color: '#fff',
-  borderRadius: '6px',
-  textDecoration: 'none',
-  fontWeight: 'bold'
-};
