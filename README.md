@@ -1,7 +1,3 @@
-from pathlib import Path
-import zipfile
-
-# Define README content
 readme_content = """# 🛡️ Safe Wallet
 
 🌐 [Web App](/apps/web/README.md) ・ 📱 [Mobile App](/apps/mobile/README.md)
