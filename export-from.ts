@@ -1,6 +1,6 @@
 import { a } from './hub'
 
-console.log(a)
+log(a)
 
 if (import.meta.hot) {
   import.meta.hot.accept()

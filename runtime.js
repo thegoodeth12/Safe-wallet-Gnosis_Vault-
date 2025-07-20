@@ -11,6 +11,5 @@ export const rerender = (updates) => {
 }
 
 const apply = () => {
-  document.querySelector('.file-delete-restore').textContent =
-    Object.values(state).join(':')
+  globalThis.__HMR__['.file-delete-restore'] = Object.values(state).join(':')
 }

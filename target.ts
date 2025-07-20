@@ -9,7 +9,7 @@ const def = 'D0'
 
 export default def
 
-console.log(`<<<<<< ${a} ${bValue} ${def} ; ${dep}`)
+log(`<<<<<< ${a} ${bValue} ${def} ; ${dep}`)
 
 if (import.meta.hot) {
   import.meta.hot.acceptExports(['a', 'default'])

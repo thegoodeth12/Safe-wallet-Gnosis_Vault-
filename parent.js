@@ -3,6 +3,6 @@
 import { foo } from './child'
 
 import.meta.hot?.accept('./child', ({ foo }) => {
-  console.log('(optional-chaining) child update')
-  document.querySelector('.optional-chaining').textContent = foo
+  log('(optional-chaining) child update')
+  globalThis.__HMR__['.optional-chaining'] = foo
 })

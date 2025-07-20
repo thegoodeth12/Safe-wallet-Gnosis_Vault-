@@ -1,3 +1,5 @@
-import 'missing-modules'
+import { b } from './b'
 
-console.log('missing test')
+export const a = {
+  b,
+}

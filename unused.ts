@@ -4,7 +4,7 @@ export const y = 'y'
 
 export default 'z'
 
-console.log('-- unused --')
+log('-- unused --')
 
 if (import.meta.hot) {
   import.meta.hot.acceptExports([])

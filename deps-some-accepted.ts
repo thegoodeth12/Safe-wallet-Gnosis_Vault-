@@ -7,7 +7,7 @@ export { aliased as c }
 
 export default 'default0'
 
-console.log(`some >>>>>> ${a}, ${b}, ${aliased}`)
+log(`some >>>>>> ${a}, ${b}, ${aliased}`)
 
 if (import.meta.hot) {
   import.meta.hot.acceptExports(['a', 'b', 'default'])

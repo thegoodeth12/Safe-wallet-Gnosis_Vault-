@@ -4,9 +4,9 @@ export const y = 'y'
 
 export default 'z'
 
-console.log('>>> side FX')
+log('>>> side FX')
 
-document.querySelector('.app').textContent = 'hey'
+globalThis.__HMR__['.app'] = 'hey'
 
 if (import.meta.hot) {
   import.meta.hot.acceptExports(['default'])
