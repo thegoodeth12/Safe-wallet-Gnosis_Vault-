@@ -27,4 +27,9 @@
   "scripts": {
     "check-env": "ts-node scripts/check-env.ts"
   }
+{
+  "scripts": {
+    "check-env": "ts-node scripts/check-env.ts",
+    "dev": "pnpm run check-env && next dev"
+  }
 }
