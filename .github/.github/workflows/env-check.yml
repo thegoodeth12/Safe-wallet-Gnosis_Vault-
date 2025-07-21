@@ -1,0 +1,50 @@
+name: 🔍 Env Var Checker
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  check-env:
+    name: 🔧 Check Required Environment Variables
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 📦 Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 📋 Check required environment variables
+        run: |
+          echo "Checking required environment variables..."
+
+          REQUIRED_VARS=(
+            NEXT_PUBLIC_SAFE_STATUS_PAGE_URL
+            # Add other required vars below as needed
+            # NEXT_PUBLIC_SAFE_APP_URL
+          )
+
+          MISSING=0
+          for VAR in "${REQUIRED_VARS[@]}"; do
+            if [ -z "${!VAR}" ]; then
+              echo "❌ ERROR: $VAR is not set"
+              MISSING=1
+            else
+              echo "✅ $VAR = ${!VAR}"
+            fi
+          done
+
+          if [ "$MISSING" -ne 0 ]; then
+            echo "❗ One or more required environment variables are missing."
+            exit 1
+          else
+            echo "✅ All required environment variables are defined."
+          fi
+        env:
+          NEXT_PUBLIC_SAFE_STATUS_PAGE_URL: ${{ secrets.NEXT_PUBLIC_SAFE_STATUS_PAGE_URL }}
+          # Add any other environment variables you store in GitHub Secrets
