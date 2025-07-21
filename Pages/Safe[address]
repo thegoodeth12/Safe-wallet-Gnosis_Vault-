@@ -1,0 +1,12 @@
+/pages
+  └── /safe
+       └── [address].tsx     ← Live Safe Dashboard
+/components
+  ├── SafeOwners.tsx         ← Shows owners, threshold
+  ├── ProposalList.tsx       ← Lists Safe proposals
+  └── SignButton.tsx         ← Optional Reown signer
+/lib
+  ├── safeApi.ts              ← Safe service fetcher
+  └── reownSigner.ts         ← Reown signer helper
+/pages/api
+  └── safe.ts                ← API route (dynamic data)
