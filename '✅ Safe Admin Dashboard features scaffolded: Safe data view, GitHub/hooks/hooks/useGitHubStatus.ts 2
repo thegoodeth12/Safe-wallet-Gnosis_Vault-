@@ -1,0 +1,12 @@
+// hooks/useGitHubStatus.ts
+export async function useGitHubStatus() {
+  const repo = process.env.NEXT_PUBLIC_GITHUB_REPO!;
+  const res = await fetch(`https://api.github.com/repos/${repo}`);
+  const data = await res.json();
+
+  return {
+    stars: data.stargazers_count,
+    forks: data.forks_count,
+    openIssues: data.open_issues_count,
+  };
+}
