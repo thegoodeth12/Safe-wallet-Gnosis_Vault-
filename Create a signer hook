@@ -1,0 +1,12 @@
+// lib/reownSigner.ts
+import { createSigner } from "@reown/sdk";
+
+export async function signWithReown(message: string) {
+  const signer = await createSigner({
+    email: "rchigozle60@gmail.com", // Or your MPC ID
+    provider: "safe" // Can also use OTP or Telegram
+  });
+
+  const signature = await signer.signMessage(message);
+  return signature;
+}
