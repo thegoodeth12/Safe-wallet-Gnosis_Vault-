@@ -1,0 +1,22 @@
+gnosis-vault-dashboard/
+├── pages/
+│   ├── index.tsx                  // Main dashboard
+│   └── safe/[address].tsx        // Dynamic Safe view
+├── components/
+│   ├── SafeInfoCard.tsx
+│   ├── OwnerList.tsx
+│   ├── ProposalList.tsx
+│   ├── SettingsPanel.tsx
+│   ├── NetworkSwitcher.tsx
+│   └── SlackNotifier.tsx
+├── lib/
+│   ├── safeClient.ts              // SDK instance
+│   └── utils.ts                   // Helper tools
+├── styles/
+│   └── theme.ts                   // Chakra theme
+├── public/
+│   └── logo.svg
+├── .env.local
+├── next.config.js
+├── package.json
+└── README.md
