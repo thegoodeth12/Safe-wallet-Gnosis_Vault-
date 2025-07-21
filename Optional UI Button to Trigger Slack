@@ -1,0 +1,12 @@
+// components/SlackNotifyButton.tsx
+const SlackNotifyButton = ({ safeAddress, proposalType, txHash }) => {
+  const handleNotify = async () => {
+    await fetch('/api/notify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ safeAddress, proposalType, txHash }),
+    })
+  }
+
+  return <button onClick={handleNotify}>📣 Notify Slack</button>
+}
