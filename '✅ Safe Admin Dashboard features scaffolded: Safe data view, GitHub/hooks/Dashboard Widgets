@@ -1,0 +1,11 @@
+export default async function GitHubStatus() {
+  const status = await useGitHubStatus();
+  return (
+    <div>
+      <h3>GitHub Repo</h3>
+      <p>⭐ Stars: {status.stars}</p>
+      <p>🔀 Forks: {status.forks}</p>
+      <p>🐛 Open Issues: {status.openIssues}</p>
+    </div>
+  );
+}
