@@ -1,0 +1,89 @@
+from pathlib import Path
+
+# Define the folder structure for the Safe Admin Dashboard
+base_path = Path("/mnt/data/admin-dashboard")
+
+folders = [
+    "apps/admin-dashboard/components",
+    "apps/admin-dashboard/pages",
+    "apps/admin-dashboard/styles",
+    "apps/admin-dashboard/utils",
+    "apps/admin-dashboard/hooks",
+    "apps/admin-dashboard/public/icons",
+    "apps/admin-dashboard/api",
+]
+
+# Create directories
+for folder in folders:
+    Path(base_path / folder).mkdir(parents=True, exist_ok=True)
+
+# Create essential files with starter content
+files = {
+    "apps/admin-dashboard/pages/index.tsx": """\
+import DashboardLayout from '../components/DashboardLayout';
+
+export default function Home() {
+  return (
+    <DashboardLayout>
+      <h1 className="text-3xl font-bold text-white">🛡️ SafeControl Panel</h1>
+      <p className="text-gray-400 mt-2">Welcome to the future of onchain coordination.</p>
+    </DashboardLayout>
+  );
+}
+""",
+
+    "apps/admin-dashboard/components/DashboardLayout.tsx": """\
+import React from 'react';
+
+const DashboardLayout = ({ children }: { children: React.ReactNode }) => (
+  <div className="min-h-screen bg-gray-900 text-white p-4">
+    <header className="flex justify-between items-center mb-6">
+      <h2 className="text-xl font-semibold">SafeControl Panel</h2>
+      <div>⚙️ 🔔</div>
+    </header>
+    <main>{children}</main>
+  </div>
+);
+
+export default DashboardLayout;
+""",
+
+    "apps/admin-dashboard/styles/globals.css": """\
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+""",
+
+    "apps/admin-dashboard/tsconfig.json": """\
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}
+"""
+}
+
+# Create the files with content
+for file_path, content in files.items():
+    path = base_path / file_path
+    path.write_text(content)
+
+base_path
