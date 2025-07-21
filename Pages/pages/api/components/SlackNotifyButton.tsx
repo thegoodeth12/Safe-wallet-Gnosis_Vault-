@@ -20,3 +20,4 @@ export default function SlackNotifyButton({ safeAddress, proposalType, txHash }:
     </Button>
   )
 }
+<SlackNotifyButton safeAddress={safeAddress} proposalType="GitHub PR" txHash={txHash} />
