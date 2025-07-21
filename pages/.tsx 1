@@ -1,0 +1,8 @@
+// pages/safe/[address].tsx
+import { useRouter } from 'next/router';
+export default function SafePage() {
+  const { query } = useRouter();
+  const addr = query.address;
+  if (!addr) return <div>Loading...</div>;
+  return <div>Safe address: {addr}</div>;
+}
