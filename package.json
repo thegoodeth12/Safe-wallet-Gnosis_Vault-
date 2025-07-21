@@ -14,4 +14,8 @@
     "typescript": "^5.0.0",
     "chakra-ui": "^2.7.0"
   }
+{
+  "scripts": {
+    "check-env": "ts-node scripts/check-env.ts"
+  }
 }
