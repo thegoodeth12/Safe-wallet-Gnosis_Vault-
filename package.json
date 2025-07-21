@@ -18,4 +18,13 @@
   "scripts": {
     "check-env": "ts-node scripts/check-env.ts"
   }
+{
+  "scripts": {
+    "predev": "ts-node scripts/check-env.ts",
+    "dev": "next dev"
+  }
+{
+  "scripts": {
+    "check-env": "ts-node scripts/check-env.ts"
+  }
 }
