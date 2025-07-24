@@ -18,3 +18,4 @@ This is a secure, multichain Safe Wallet dashboard with full GitHub + Discord/Sl
 2. Install dependencies:
    ```bash
    npm install
+3. SLACK_WEBHOOK_URL=https://hooks.slack.com/services/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
