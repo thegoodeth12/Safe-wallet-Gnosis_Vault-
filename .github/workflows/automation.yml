@@ -1,0 +1,31 @@
+name: Safe Wallet Automation
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  run-automation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install deps
+        run: npm install
+
+      - name: Run fix structure
+        run: node scripts/fix-structure.js
+
+      - name: Send Slack ping
+        run: node scripts/slack-webhook-handler.js
+
+      - name: Update README
+        run: npx ts-node scripts/setup-readme-update.ts
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.https://hooks.slack.com/services/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}}
+          GITHUB_TOKEN: ${{ secrets.583a146beda6e808f98b06afc9e568287fdb3fb9}}
