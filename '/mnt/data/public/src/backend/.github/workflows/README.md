@@ -1,21 +1,20 @@
-# 🛡️ Safe App Project
+# 🔐 Gnosis Vault Dashboard
 
-Secure Safe{Wallet} dashboard with frontend, Slack alerts, and GitHub Actions integration.
+This is a secure, multichain Safe Wallet dashboard with full GitHub + Discord/Slack automation.
 
-## 📦 Features
+## 🧰 Features
 
-- SAP UI5 frontend dashboard
-- Express backend server
-- Slack webhook notification on `/trigger`
-- GitHub Actions automation
-
-## 🚀 Getting Started
-
-1. Clone the repo
-2. `npm install`
-3. Create a `.env` with your Slack webhook
-4. `npm run start`
-
-Open [http://localhost:3001](http://localhost:3001)
+- ⚙️ GitHub Actions for Safe proposals
+- 🔔 Slack/Discord notifications
+- 📊 Transaction + Owner Overview
+- 🌐 Deployable with Vercel or GitHub Pages
+- 🔒 Built with security-first in mind
 
 ---
+
+## 🔧 Setup Instructions
+
+1. Clone the repo
+2. Install dependencies:
+   ```bash
+   npm install
