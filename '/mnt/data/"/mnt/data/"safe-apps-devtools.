@@ -1,0 +1,88 @@
+# Re-define the project structure after kernel reset
+project_structure = {
+    "safe-apps-devtools": {
+        "README.md": "# Safe Apps Developer Tools Monorepo\n\nInitialized project structure.",
+        "packages": {
+            "cra-template-safe-app": {"README.md": "# CRA Template Safe App\n"},
+            "safe-apps-react-sdk": {"README.md": "# Safe Apps React SDK\n"},
+            "safe-apps-sdk": {"README.md": "# Safe Apps SDK\n"},
+            "safe-apps-provider": {"README.md": "# Safe Apps Provider\n"},
+            "safe-apps-web3modal": {"README.md": "# Safe Apps Web3Modal\n"},
+            "safe-apps-wagmi": {"README.md": "# Safe Apps Wagmi Connector\n"},
+            "safe-apps-test-app": {"README.md": "# Safe Apps Test App\n"}
+        },
+        ".github": {
+            "workflows": {
+                "ci.yml": """name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Build packages
+      run: yarn build
+"""
+            }
+        },
+        "package.json": """{
+  "name": "safe-apps-devtools",
+  "private": true,
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "build": "yarn workspaces run build",
+    "start": "yarn workspace safe-apps-test-app start"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
+""",
+        "yarn.lock": "",
+        "tsconfig.json": """{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "CommonJS",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}
+"""
+    }
+}
+
+# Re-create directory and files
+def create_structure(base_path, structure):
+    for name, content in structure.items():
+        path = os.path.join(base_path, name)
+        if isinstance(content, dict):
+            os.makedirs(path, exist_ok=True)
+            create_structure(path, content)
+        else:
+            with open(path, "w") as f:
+                f.write(content)
+
+# Path to create everything
+base_dir = "/mnt/data/safe-apps-project"
+create_structure(base_dir, project_structure)
+
+base_dir
