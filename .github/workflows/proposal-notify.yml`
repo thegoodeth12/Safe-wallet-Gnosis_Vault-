@@ -1,0 +1,39 @@
+---
+
+### ✅ 6. GitHub Action to Notify Slack/Discord
+
+> Create the file below:
+
+#### 📄 `.github/workflows/proposal-notify.yml`
+
+```yaml
+name: Notify Safe Proposal
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/proposal-slack.ts'
+      - '.env.local'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Send Slack Notification
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          npx ts-node scripts/proposal-slack.ts
