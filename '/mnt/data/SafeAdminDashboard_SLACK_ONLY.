@@ -1,7 +1,58 @@
-from zipfile import ZipFile
-from pathlib import Path
-
 # Define file contents
+readme_md = """
+# 🔐 Safe Admin Dashboard (Slack-only)
+
+A lightweight, no-backend dashboard for viewing Safe{Wallet} data — deployable instantly to GitHub Pages, Vercel, or any static host.
+
+## 🚀 Features
+- View Safe address and current network
+- Display balances (static/dummy for now)
+- Show transaction history (static)
+- Customize via `config.js`
+- Built using vanilla HTML/CSS/JS
+- No dependencies, no build step
+- Slack notifications only (no Discord)
+
+## 📁 Files Included
+- `index.html` – Main dashboard UI
+- `style.css` – Dashboard styling
+- `dashboard.js` – JS logic for loading and populating dashboard
+- `config.js` – Set your Safe address and network here
+
+## 📦 Deployment
+You can deploy this in 3 ways:
+
+### 🌀 GitHub Pages
+1. Push this folder to a GitHub repository
+2. Go to **Settings > Pages**
+3. Set the source to `main` branch `/root`
+4. Done — your site is live
+
+### ▲ Vercel
+1. Import this repo into [vercel.com](https://vercel.com)
+2. No config required — it's a static project
+3. Deploy!
+
+### 🖥️ Manual Hosting
+Just unzip the folder and open `index.html` in your browser.
+
+---
+
+Built for Safe 0xAfD5f60aA8eb4F488eAA0eF98c1C5B0645D9A0A0 with ❤️.
+"""
+
+vercel_json = """
+{
+  "version": 2,
+  "public": true,
+  "builds": [],
+  "routes": [
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
+"""
+
+# Zip contents from earlier
 index_html = """
 <!DOCTYPE html>
 <html lang="en">
@@ -65,8 +116,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Dummy transaction history
   document.getElementById("txHistory").innerHTML = '<li>No recent transactions</li>';
-
-  // Optionally add fetch logic here
 });
 """
 
@@ -77,12 +126,14 @@ const config = {
 };
 """
 
-# Create temp folder and write files
-zip_path = "/mnt/data/SafeAdminDashboard_SLACK_ONLY.zip"
+# Create zip archive with all files
+zip_path = "/mnt/data/SafeDashboard_SLACK_ONLY_Package.zip"
 with ZipFile(zip_path, "w") as zipf:
     zipf.writestr("index.html", index_html)
     zipf.writestr("style.css", style_css)
     zipf.writestr("dashboard.js", dashboard_js)
     zipf.writestr("config.js", config_js)
+    zipf.writestr("README.md", readme_md)
+    zipf.writestr("vercel.json", vercel_json)
 
 zip_path
