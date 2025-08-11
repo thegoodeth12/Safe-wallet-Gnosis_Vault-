@@ -1,0 +1,35 @@
+{
+  "name": "Gnosis Vault Assistant",
+  "description": "Gnosis Vault Assistant is a powerful, secure, and automated dashboard for managing Safe (formerly Gnosis Safe) multisig wallets. It gives teams and DAOs real-time portfolio tracking, streamlined transaction signing, and cross-chain asset management — all in one interface.",
+  "shortName": "Vault Assistant",
+  "shortDescription": "Manage your Safe multisig with real-time tracking, one-click transfers, and automated signing.",
+  "applicationUrl": "https://safe-vault-f44t.vercel.app",
+  "iconPath": "/icon.png",
+  "developer": {
+    "name": "Gnosis Vault Assistant",
+    "website": "https://safe-vault-f44t.vercel.app",
+    "supportUrl": "https://safe-vault-f44t.vercel.app/support",
+    "documentationUrl": "https://safe-vault-f44t.vercel.app/docs",
+    "statusUrl": "https://safe-vault-f44t.vercel.app/status",
+    "contact": {
+      "address": {
+        "line1": "2 Woodward Avenue",
+        "line2": "Suite 100",
+        "city": "Detroit",
+        "state": "MI",
+        "postalCode": "48226",
+        "country": "US"
+      }
+    }
+  },
+  "networks": [
+    { "chainId": "1" },
+    { "chainId": "42161" },
+    { "chainId": "137" },
+    { "chainId": "8453" },
+    { "chainId": "10" },
+    { "chainId": "56" }
+  ],
+  "safeAppUrl": "https://safe-vault-f44t.vercel.app/app",
+  "verified": true
+}
