@@ -1,0 +1,7 @@
+Push or schedule trigger
+        ↓
+Update README.md with badge statuses
+        ↓
+Push commit to repo
+        ↓
+Send Slack message: “✅ Gnosis Vault CI badges updated”

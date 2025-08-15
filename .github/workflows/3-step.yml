@@ -18,7 +18,7 @@ env:
 jobs:
   find_exercise:
     name: Find Exercise Issue
-    uses: skills/exercise-toolkit/.github/workflows/find-exercise-issue.yml@v0.5.0
+    uses: skills/exercise-toolkit/.github/workflows/find-exercise-issue.yml@v0.7.0
 
   check_step_work:
     name: Check step work
@@ -49,7 +49,7 @@ jobs:
       - name: Lint welcome.yml with actionlint
         id: actionlint-check
         continue-on-error: true
-        uses: raven-actions/actionlint@01fce4f43a270a612932cb1c64d40505a029f821 # v2.0.0
+        uses: raven-actions/actionlint@3a24062651993d40fed1019b58ac6fbdfbf276cc # v2.0.1
         with:
           files: .github/workflows/welcome.yml
 
@@ -88,7 +88,7 @@ jobs:
 
       - name: Build message - step results
         id: build-message-step-results
-        uses: skills/action-text-variables@v2
+        uses: skills/action-text-variables@v3
         with:
           template-file: exercise-toolkit/markdown-templates/step-feedback/step-results-table.md
           template-vars: |
@@ -121,7 +121,7 @@ jobs:
 
       - name: Build message - step finished
         id: build-message-step-finish
-        uses: skills/action-text-variables@v2
+        uses: skills/action-text-variables@v3
         with:
           template-file: exercise-toolkit/markdown-templates/step-feedback/step-finished-prepare-next-step.md
           template-vars: |

@@ -1,0 +1,37 @@
+name: 🚀 Auto Update Status Badges with Slack
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * *' # Every day at noon UTC
+  push:
+    paths:
+      - .github/workflows/*
+      - scripts/update-badges.sh
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 🛠️ Run badge updater
+        run: bash scripts/update-badges.sh
+
+      - name: 📝 Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "🔄 Auto-update CI/CD badges" || echo "No changes to commit"
+          git push
+
+      - name: 🔔 Notify Slack
+        if: ${{ success() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_TITLE: "✅ Gnosis Vault CI updated!"
+          SLACK_MESSAGE: "Your README.md badge section has been refreshed. 🛠️"
+          SLACK_COLOR: "#36a64f"

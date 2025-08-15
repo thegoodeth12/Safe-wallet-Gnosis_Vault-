@@ -1,0 +1,47 @@
+name: 🚀 Release Trigger - Safe Wallet Automation
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release-ops:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔄 Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 🧪 Install dependencies
+        run: npm install
+
+      - name: ⚙️ Build project
+        run: npm run build
+
+      - name: 🗜 Zip the output
+        run: |
+          zip -r release-build.zip ./dist || zip -r release-build.zip .  # fallback if no dist/
+
+      - name: ☁️ Upload ZIP as release asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release-build.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 📝 Update README with new release tag
+        run: |
+          sed -i "s/Current Version:.*/Current Version: ${{ github.event.release.tag_name }}/" README.md
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git commit -am "📄 Update README with release ${{ github.event.release.tag_name }}"
+          git push origin main
+
+      - name: 📣 Send Slack release notification
+        if: success()
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data "{
+            \"text\": \"🚀 *New Safe Wallet Release!*\n• Repo: <https://github.com/${{ github.repository }}>\n• Tag: *${{ github.event.release.tag_name }}*\n• View: <${{ github.event.release.html_url }}>\" 
+          }" $SLACK_WEBHOOK
