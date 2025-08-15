@@ -1,0 +1,59 @@
+from pathlib import Path
+
+# Define the base path
+base_path = Path("/mnt/data/admin-dashboard")
+
+# Define subdirectories and core files to add Safe data, GitHub/Discord status, and proposals UI
+feature_dirs = [
+    base_path / "components" / "Safe",
+    base_path / "components" / "GitHub",
+    base_path / "components" / "Discord",
+    base_path / "components" / "Proposals",
+    base_path / "data",
+    base_path / "hooks",
+    base_path / "pages" / "safe",
+    base_path / "pages" / "settings"
+]
+
+# Create directories
+for directory in feature_dirs:
+    directory.mkdir(parents=True, exist_ok=True)
+
+# Create placeholder files with content
+files_to_create = {
+    base_path / "components" / "Safe" / "SafeStatusCard.tsx":
+    "// Component: Displays Safe address, owners, balance, and threshold\n"
+    "export default function SafeStatusCard() {\n"
+    "  return <div className='p-4 border rounded'>Safe status info here</div>;\n}",
+
+    base_path / "components" / "GitHub" / "GitHubBotStatus.tsx":
+    "// Component: GitHub bot activity status\n"
+    "export default function GitHubBotStatus() {\n"
+    "  return <div className='p-4 border rounded'>GitHub bot is active</div>;\n}",
+
+    base_path / "components" / "Discord" / "DiscordBotStatus.tsx":
+    "// Component: Discord bot activity status\n"
+    "export default function DiscordBotStatus() {\n"
+    "  return <div className='p-4 border rounded'>Discord bot is active</div>;\n}",
+
+    base_path / "components" / "Proposals" / "ProposalsTable.tsx":
+    "// Component: Displays Safe transaction proposals in a table\n"
+    "export default function ProposalsTable() {\n"
+    "  return <div className='p-4 border rounded'>Proposal history table</div>;\n}",
+
+    base_path / "pages" / "safe" / "index.tsx":
+    "// Safe Dashboard Overview Page\n"
+    "export default function SafeDashboardPage() {\n"
+    "  return <div className='p-6'>Welcome to Safe Dashboard</div>;\n}",
+
+    base_path / "pages" / "settings" / "index.tsx":
+    "// Admin Settings Page\n"
+    "export default function SettingsPage() {\n"
+    "  return <div className='p-6'>Admin settings (Safe address, Reown, integrations)</div>;\n}",
+}
+
+# Write files
+for file_path, content in files_to_create.items():
+    file_path.write_text(content)
+
+"✅ Safe Admin Dashboard features scaffolded: Safe data view, GitHub/Discord bot panels, proposals & settings."

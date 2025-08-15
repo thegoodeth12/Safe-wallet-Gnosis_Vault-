@@ -1,0 +1,87 @@
+🌐 Name: SafeControl Panel
+
+“Where Safe owners, signers, and automation live in perfect harmony.
+
+📐 Layout Overview (Wireframe Concept)
+┌────────────────────────────────────────────────────────────┐
+│ 🛡️ SafeControl Panel                        ⚙️ Settings 🔔 │
+├────────────────────────────────────────────────────────────┤
+│ Sidebar      | Main View                                    │
+│──────────────┼──────────────────────────────────────────────│
+│ 🏠 Overview   | 📊 Wallet Stats                              │
+│ 🔐 Owners     | 💼 Proposals                                │
+│ 🧾 History    | 🔁 Threshold Updates                        │
+│ 💬 Activity   | 📥 Incoming Transactions                    │
+│ 📡 Bots       | ⚙️ GitHub & Discord Automations            │
+│ 📱 Extensions | 📦 Safe App Extensions                      │
+│ 🔍 Search     | 🔐 MPC / Reown Signatures                   │
+└──────────────┴──────────────────────────────────────────────┘
+
+🎨 Design Style
+Element
+Style
+Theme
+Midnight (dark UI, neon accent colors like teal, purple, electric blue)
+Typography
+Inter, Satoshi, or Space Grotesk (clean, futuristic fonts)
+Animations
+Micro-animations on button hovers, proposal state changes
+Icons
+Phosphor / Tabler / Lucide (for clear, minimal crypto-style icons)
+Security UX
+Motion blur + “shield verification” animation on signer approvals
+
+🧩 Feature Breakdown
+1. 🔐 Wallet Overview Tab
+	•	Current chain, Safe address, balance (ETH + tokens)
+	•	Threshold + signer count
+	•	🔄 Switch Safe
+	•	🧠 AI Copilot Summary (GPT-powered Safe status)
+
+2. 👥 Owners Manager
+	•	Table view of owners (addresses, ENS, GitHub ID linked)
+	•	Add/Remove owner w/ Safe proposal builder
+	•	Owner role tagging (e.g., Approver, Delegate, Viewer)
+	•	🔒 Signer status with Reown/MPC integration
+
+3. 📥 Transaction Proposals
+	•	Timeline-style view of pending + historical proposals
+	•	Status: 🟢 Approved, 🟡 Pending, 🔴 Rejected
+	•	“One-click sign” if signer
+	•	GitHub/Discord trigger indicators
+	•	🔗 Links to Etherscan/SafeTx
+
+4. 📦 Safe App Extensions
+	•	Live preview of embedded Safe Apps
+	•	Warns if unofficial app used (security modal)
+	•	Add new dApp via verified Safe AppKit plugins
+
+5. ⚙️ Automation Tab
+	•	GitHub bot PR trigger configs
+	•	Discord webhook status
+	•	Telegram/Slack integrations
+	•	Auto-label Safe transactions from GitHub PRs
+
+6. 📡 AI Copilot Panel
+	•	Type: “Propose upgrade to threshold 3/5 on Arbitrum Safe”
+	•	Auto-generates proposal + notifies signers
+	•	Hooks into project-setup.ts logic
+
+⸻
+
+✨ BONUS UI/UX Features
+	•	🧩 Drag-and-drop dashboard blocks
+	•	🌐 Multichain badge on each Safe panel (ETH, Arbitrum, etc.)
+	•	🔐 Reown Signature Bubble when a Reown key signs a proposal
+	•	🎥 Lottie animations on threshold change, proposal confirmation
+	•	📈 Real-time Safe health score powered by backend heuristics
+	•	📳 Mobile-friendly PWA-ready design
+
+⸻
+
+🧪 Built With:
+	•	Frontend: Next.js + TypeScript
+	•	Styling: TailwindCSS + Shadcn UI + Radix UI
+	•	Auth: WalletConnect, Reown, GitHub OAuth
+	•	Backend: Node.js or serverless functions (Vercel/Cloudflare)
+	•	Infra: GitHub Actions, Safe SDK, Reown SDK, Discord Webhooks

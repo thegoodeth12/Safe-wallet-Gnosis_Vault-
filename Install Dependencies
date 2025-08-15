@@ -1,0 +1,7 @@
+npx create-next-app@latest gnosis-vault-dashboard --typescript
+cd gnosis-vault-dashboard
+
+# Install Chakra UI and Gnosis Safe SDK
+npm install @chakra-ui/react @emotion/react @emotion/styled framer-motion
+npm install @safe-global/safe-core-sdk @safe-global/safe-ethers-lib ethers
+npm install axios

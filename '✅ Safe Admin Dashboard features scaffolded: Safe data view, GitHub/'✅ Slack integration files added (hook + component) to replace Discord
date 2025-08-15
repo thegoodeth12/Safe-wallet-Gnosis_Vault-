@@ -1,0 +1,34 @@
+# Updating previous hook path to use Slack instead of Discord
+slack_hook_path = dashboard_path / "hooks/useSlackStatus.ts"
+slack_component_path = dashboard_path / "components/Slack/SlackBotStatus.tsx"
+
+# Scaffold Slack status hook and component
+slack_hook_path.parent.mkdir(parents=True, exist_ok=True)
+slack_hook_path.write_text("""\
+// Checks if Slack webhook is reachable and responding
+
+export default async function useSlackStatus() {
+  // Replace with actual Slack webhook test later
+  return { connected: true, lastPing: new Date().toISOString() };
+}
+""")
+
+slack_component_path.parent.mkdir(parents=True, exist_ok=True)
+slack_component_path.write_text("""\
+// Renders Slack webhook connection status
+
+import useSlackStatus from '../../hooks/useSlackStatus';
+
+export default async function SlackBotStatus() {
+  const status = await useSlackStatus();
+  return (
+    <div>
+      <h3>Slack Bot</h3>
+      <p>Status: {status.connected ? "Connected" : "Disconnected"}</p>
+      <p>Last Ping: {status.lastPing}</p>
+    </div>
+  );
+}
+""")
+
+"✅ Slack integration files added (hook + component) to replace Discord."

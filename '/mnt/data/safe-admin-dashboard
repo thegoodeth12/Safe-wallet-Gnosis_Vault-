@@ -1,0 +1,64 @@
+from zipfile import ZipFile
+import os
+
+# Create directory structure
+base_dir = "/mnt/data/dashboard"
+os.makedirs(base_dir, exist_ok=True)
+
+# Create sample HTML, JS, CSS, and config files
+files_content = {
+    "index.html": """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Safe Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Safe Admin Dashboard 🔐</h1>
+    <div id="dashboard"></div>
+    <script src="config.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
+""",
+    "style.css": """
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+    padding: 20px;
+}
+h1 {
+    color: #0066cc;
+}
+""",
+    "dashboard.js": """
+document.getElementById("dashboard").innerHTML = "<p>Loading Safe data...</p>";
+fetch(config.safeApiUrl)
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("dashboard").innerHTML = "<pre>" + JSON.stringify(data, null, 2) + "</pre>";
+    });
+""",
+    "config.js": """
+const config = {
+    safeApiUrl: "https://safe-transaction-arbitrum.safe.global/api/v1/safes/0x821f2b40d965b81202b181Aba1c7a380C49Ed675/"
+};
+"""
+}
+
+# Write files to the directory
+for filename, content in files_content.items():
+    with open(os.path.join(base_dir, filename), 'w') as f:
+        f.write(content.strip())
+
+# Create a zip file of the dashboard
+zip_path = "/mnt/data/safe-admin-dashboard.zip"
+with ZipFile(zip_path, 'w') as zipf:
+    for filename in files_content:
+        file_path = os.path.join(base_dir, filename)
+        zipf.write(file_path, arcname=filename)
+
+zip_path

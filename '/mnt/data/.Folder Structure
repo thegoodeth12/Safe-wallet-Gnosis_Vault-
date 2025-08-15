@@ -1,0 +1,17 @@
+safe-app-project/
+├── public/
+│   └── index.html
+├── src/
+│   ├── config.js
+│   ├── dashboard.js
+│   └── style.css
+├── backend/
+│   ├── server.js
+│   └── slack.js
+├── .github/
+│   └── workflows/
+│       └── deploy.yml
+├── text.txt
+├── package.json
+├── README.md
+└── .env

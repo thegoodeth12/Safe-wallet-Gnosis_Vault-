@@ -1,0 +1,22 @@
+name: Safe Proposal Notifier
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request:
+    types: [opened, labeled]
+
+jobs:
+  notify-slack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Slack Notification
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "text": "*🔐 New Safe Proposal Triggered!*\n➡️ Triggered from: ${{ github.repository }}\n🔗 PR/Issue: ${{ github.event.issue.html_url || github.event.pull_request.html_url }}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.https://hooks.slack.com/services/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}}
+                  
