@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@safe-global/protocol-kit": "^1.4.2",
-    "@safe-global/safe-apps-sdk": "^7.6.0",
+    "@safe-global/safe-apps-sdk": "^9.0.0",
     "@safe-global/safe-apps-react-sdk": "^0.13.0",
     "@safe-global/safe-apps-provider": "^0.13.0",
     "@reown/sdk": "^1.1.2",
