@@ -49,7 +49,7 @@ jobs:
       - name: Lint welcome.yml with actionlint
         id: actionlint-check
         continue-on-error: true
-        uses: raven-actions/actionlint@3a24062651993d40fed1019b58ac6fbdfbf276cc # v2.0.1
+        uses: raven-actions/actionlint@205b530c5d9fa8f44ae9ed59f341a0db994aa6f8 # v2.1.2
         with:
           files: .github/workflows/welcome.yml
 
